@@ -2,71 +2,68 @@ import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Toolti
 import { SHIFT_DATA, SHIFTS, WEEKDAYS } from '../../data/mockData';
 
 export const ShiftHeatmap = () => {
-  // Transform data for heatmap
-  const data = SHIFT_DATA.map((d, idx) => ({
-    x: WEEKDAYS.indexOf(d.weekday),
-    y: SHIFTS.indexOf(d.shift),
-    value: d.value,
-    weekday: d.weekday,
-    shift: d.shift,
+  const data = SHIFT_DATA.map((entry) => ({
+    x: WEEKDAYS.indexOf(entry.weekday),
+    y: SHIFTS.indexOf(entry.shift),
+    value: entry.value,
+    weekday: entry.weekday,
+    shift: entry.shift,
   }));
 
-  // Color scale (blue theme, no orange)
-  const getColor = (value: number) => {
-    const max = Math.max(...data.map(d => d.value));
-    const intensity = value / max;
+  const maxValue = Math.max(...data.map((entry) => entry.value));
 
-    if (intensity < 0.3) return '#1e3a8a';
-    if (intensity < 0.5) return '#1e40af';
-    if (intensity < 0.7) return '#2563eb';
-    if (intensity < 0.85) return '#3b82f6';
-    return '#ef4444';
+  const getColor = (value: number) => {
+    const intensity = value / maxValue;
+    if (intensity < 0.25) return '#1e3a8a';
+    if (intensity < 0.5) return '#1d4ed8';
+    if (intensity < 0.75) return '#2563eb';
+    return '#3b82f6';
   };
 
   return (
     <div className="card p-5" id="shift-pattern">
-      <h3 className="text-lg font-semibold mb-4">Schichtmuster – Fehlerrate nach Wochentag</h3>
+      <h3 className="mb-4 text-lg font-semibold">Schichtmuster – Fehlerrate nach Wochentag</h3>
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart
-            margin={{ top: 20, right: 20, bottom: 60, left: 100 }}
-          >
+          <ScatterChart margin={{ top: 20, right: 24, bottom: 60, left: 120 }}>
             <XAxis
               type="number"
               dataKey="x"
               domain={[0, 6]}
-              ticks={[0, 1, 2, 3, 4, 5, 6]}
-              tickFormatter={(value) => WEEKDAYS[value] || ''}
-              stroke="#9ca3af"
+              ticks={Array.from({ length: 7 }, (_, index) => index)}
+              tickFormatter={(value) => WEEKDAYS[value] ?? ''}
+              stroke="#94a3b8"
+              tick={{ fill: '#94a3b8', fontSize: 12 }}
+              angle={-30}
+              textAnchor="end"
+              height={60}
+              tickMargin={12}
             />
             <YAxis
               type="number"
               dataKey="y"
-              domain={[0, 2]}
-              ticks={[0, 1, 2]}
-              tickFormatter={(value) => SHIFTS[value] || ''}
-              stroke="#9ca3af"
-              width={90}
+              domain={[0, SHIFTS.length - 1]}
+              ticks={SHIFTS.map((_, index) => index)}
+              tickFormatter={(value) => SHIFTS[value] ?? ''}
+              stroke="#94a3b8"
+              tick={{ fill: '#94a3b8', fontSize: 12 }}
+              width={140}
+              tickMargin={12}
             />
-            <ZAxis type="number" dataKey="value" range={[800, 800]} />
+            <ZAxis type="number" dataKey="value" range={[700, 700]} />
             <Tooltip
-              content={({ payload }) => {
-                if (payload && payload.length > 0) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-dark-surface border border-dark-border rounded-lg px-3 py-2 shadow-lg">
-                      <div className="text-sm font-medium text-dark-text">{data.shift} – {data.weekday}</div>
-                      <div className="text-sm text-primary-400">{data.value.toFixed(2)}% Fehlerrate</div>
-                    </div>
-                  );
-                }
-                return null;
+              contentStyle={{
+                backgroundColor: '#101522',
+                border: '1px solid rgba(148,163,184,0.35)',
+                borderRadius: 12,
               }}
+              formatter={(value: number) => [`${value.toFixed(2)}%`, 'Fehlerrate']}
+              labelFormatter={(label) => WEEKDAYS[label as number] ?? ''}
             />
             <Scatter data={data} shape="square">
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={getColor(entry.value)} />
+                <Cell key={`shift-${index}`} fill={getColor(entry.value)} />
               ))}
             </Scatter>
           </ScatterChart>
@@ -74,7 +71,7 @@ export const ShiftHeatmap = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Erkenntnis:</strong> Nachtschicht zeigt leicht erhöhte Fehlerrate, besonders am Wochenende.
+        Hinweis: <strong>Nachtschichten</strong> verzeichnen am Wochenende eine leicht erhöhte Fehlerrate.
       </div>
     </div>
   );

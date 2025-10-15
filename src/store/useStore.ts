@@ -1,3 +1,4 @@
+import type { ComponentType } from 'react';
 import { create } from 'zustand';
 
 export interface Filters {
@@ -16,6 +17,23 @@ export interface BrushSelection {
   startDate: Date | null;
   endDate: Date | null;
 }
+
+export interface BreadcrumbItem {
+  label: string;
+  action: () => void;
+  icon?: ComponentType<{ className?: string }>;
+}
+
+const applyThemeClasses = (isDark: boolean) => {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+  const { body } = document;
+
+  root.classList.toggle('dark', isDark);
+  root.classList.toggle('light', !isDark);
+  body.classList.toggle('dark', isDark);
+  body.classList.toggle('light', !isDark);
+};
 
 interface Store {
   // Theme
@@ -65,8 +83,8 @@ interface Store {
   clearComparison: () => void;
 
   // Breadcrumbs
-  breadcrumbs: Array<{ label: string; action: () => void }>;
-  setBreadcrumbs: (crumbs: Array<{ label: string; action: () => void }>) => void;
+  breadcrumbs: BreadcrumbItem[];
+  setBreadcrumbs: (crumbs: BreadcrumbItem[]) => void;
 }
 
 const initialFilters: Filters = {
@@ -81,15 +99,19 @@ const initialFilters: Filters = {
   searchTerm: '',
 };
 
+if (typeof document !== 'undefined') {
+  applyThemeClasses(true);
+}
+
 export const useStore = create<Store>((set) => ({
   // Theme
   isDarkMode: true,
-  toggleTheme: () => set((state) => {
-    const newMode = !state.isDarkMode;
-    document.documentElement.classList.toggle('dark', newMode);
-    document.documentElement.classList.toggle('light', !newMode);
-    return { isDarkMode: newMode };
-  }),
+  toggleTheme: () =>
+    set((state) => {
+      const newMode = !state.isDarkMode;
+      applyThemeClasses(newMode);
+      return { isDarkMode: newMode };
+    }),
 
   // Filters
   filters: initialFilters,

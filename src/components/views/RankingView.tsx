@@ -5,7 +5,7 @@ import { filterBatches, calculateQualityScore, getScoreBadgeColor } from '../../
 import { Factory, Settings, Package, Truck, Clock, Award, CheckCircle, AlertTriangle, Circle } from 'lucide-react';
 
 export const RankingView = () => {
-  const { filters, brushSelection, setFilter, setSelectedPlantId, setActiveTab, openDrawer } = useStore();
+  const { filters, brushSelection, setFilter, setSelectedPlantId, setActiveTab } = useStore();
 
   const rankings = useMemo(() => {
     const filtered = filterBatches(BATCHES, filters, brushSelection);

@@ -1,15 +1,21 @@
 import { useEffect } from 'react';
-import { useStore } from '../store/useStore';
+import { useStore, type BreadcrumbItem } from '../store/useStore';
 import { PLANTS } from '../data/mockData';
 import { LayoutDashboard, Factory, BarChart3, Search, AlertTriangle, Trophy } from 'lucide-react';
 
 export const Breadcrumbs = () => {
-  const { breadcrumbs, setBreadcrumbs, selectedPlantId, setSelectedPlantId, activeTab, setActiveTab } = useStore();
+  const {
+    breadcrumbs,
+    setBreadcrumbs,
+    selectedPlantId,
+    setSelectedPlantId,
+    activeTab,
+    setActiveTab,
+  } = useStore();
 
   useEffect(() => {
-    const crumbs: Array<{ label: string; icon?: any; action: () => void }> = [];
+    const crumbs: BreadcrumbItem[] = [];
 
-    // Always start with current tab
     if (activeTab === 'dashboard') {
       crumbs.push({
         label: 'Dashboard',
@@ -27,11 +33,11 @@ export const Breadcrumbs = () => {
       });
 
       if (selectedPlantId) {
-        const plant = PLANTS.find((p) => p.id === selectedPlantId);
+        const plant = PLANTS.find((plant) => plant.id === selectedPlantId);
         if (plant) {
           crumbs.push({
             label: plant.name,
-            action: () => {}, // Current page, no action
+            action: () => {},
           });
         }
       }
@@ -64,35 +70,35 @@ export const Breadcrumbs = () => {
     setBreadcrumbs(crumbs);
   }, [activeTab, selectedPlantId, setSelectedPlantId, setActiveTab, setBreadcrumbs]);
 
-  if (breadcrumbs.length === 0) return null;
+  if (breadcrumbs.length <= 1) return null;
 
   return (
-    <div className="mb-4 flex items-center gap-2 text-sm">
+    <nav aria-label="Brotkrumen" className="flex items-center gap-2 text-xs text-dark-muted">
       {breadcrumbs.map((crumb, index) => {
         const Icon = crumb.icon;
+        const isLast = index === breadcrumbs.length - 1;
+
         return (
           <div key={index} className="flex items-center gap-2">
-            <button
-              onClick={crumb.action}
-              className={`
-                flex items-center gap-1 transition-colors
-                ${
-                  index === breadcrumbs.length - 1
-                    ? 'text-primary-400 font-medium cursor-default'
-                    : 'text-dark-muted hover:text-dark-text cursor-pointer'
-                }
-              `}
-              disabled={index === breadcrumbs.length - 1}
-            >
-              {Icon && <Icon className="w-4 h-4" />}
-              <span>{crumb.label}</span>
-            </button>
-            {index < breadcrumbs.length - 1 && (
-              <span className="text-dark-muted">›</span>
+            {isLast ? (
+              <span className="flex items-center gap-1 font-medium tracking-wide text-primary-200">
+                {Icon && <Icon className="h-3.5 w-3.5" />}
+                <span>{crumb.label}</span>
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={crumb.action}
+                className="flex items-center gap-1 rounded-lg px-2 py-1 transition-colors hover:text-primary-100"
+              >
+                {Icon && <Icon className="h-3.5 w-3.5" />}
+                <span className="tracking-wide">{crumb.label}</span>
+              </button>
             )}
+            {!isLast && <span className="text-dark-muted/70">›</span>}
           </div>
         );
       })}
-    </div>
+    </nav>
   );
 };

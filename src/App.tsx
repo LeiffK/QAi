@@ -13,46 +13,52 @@ import { TraceabilityTable } from './components/TraceabilityTable';
 import { Drawer } from './components/Drawer';
 
 function App() {
-  const { activeTab } = useStore();
+  const { activeTab, drawerOpen } = useStore();
+
+  const gridTemplate = drawerOpen
+    ? 'grid-cols-[240px,minmax(0,1fr),minmax(0,320px)] xl:grid-cols-[280px,minmax(0,1fr),minmax(0,360px)]'
+    : 'grid-cols-[240px,minmax(0,1fr)] xl:grid-cols-[280px,minmax(0,1fr)]';
 
   return (
-    <div className="min-h-screen bg-dark-bg">
-      <div className="max-w-[1920px] mx-auto p-6">
-        {/* Top Bar */}
-        <TopBar />
+    <div className="min-h-screen bg-dark-bg text-dark-text">
+      <div className={`mx-auto grid min-h-screen max-w-[1920px] grid-rows-[auto,1fr] gap-6 px-6 py-6 ${gridTemplate}`}>
+        <header
+          className={`sticky top-0 z-50 ${drawerOpen ? 'col-span-3' : 'col-span-2'}`}>
+          <TopBar />
+        </header>
 
-        {/* Filter Bar */}
-        <FilterBar />
+        <aside className="col-start-1 col-end-2 row-start-2 row-end-3">
+          <Navigation />
+        </aside>
 
-        {/* Quick Actions */}
-        <QuickActions />
+        <main className="col-start-2 col-end-3 row-start-2 row-end-3 flex flex-col gap-6 pb-10">
+          <QuickActions />
+          <FilterBar />
+          <Breadcrumbs />
 
-        {/* Tab Navigation */}
-        <Navigation />
-
-        {/* Breadcrumbs */}
-        <Breadcrumbs />
-
-        {/* Tab Content */}
-        <div className="mt-6">
-          {activeTab === 'dashboard' && <DashboardView />}
-          {activeTab === 'plants' && <PlantsView />}
-          {activeTab === 'insights' && <InsightsView />}
-          {activeTab === 'alerts' && <AlertsView />}
-          {activeTab === 'ranking' && <RankingView />}
-          {activeTab === 'traceability' && (
-            <div className="space-y-4">
-              <div className="text-2xl font-bold text-primary-400">
-                Traceability – Vollständige Rückverfolgung
+          <div className="card px-6 py-6">
+            {activeTab === 'dashboard' && <DashboardView />}
+            {activeTab === 'plants' && <PlantsView />}
+            {activeTab === 'insights' && <InsightsView />}
+            {activeTab === 'alerts' && <AlertsView />}
+            {activeTab === 'ranking' && <RankingView />}
+            {activeTab === 'traceability' && (
+              <div className="space-y-4">
+                <div className="text-2xl font-bold text-primary-400">
+                  Traceability – Vollständige Rückverfolgung
+                </div>
+                <TraceabilityTable />
               </div>
-              <TraceabilityTable />
-            </div>
-          )}
-        </div>
-      </div>
+            )}
+          </div>
+        </main>
 
-      {/* Drawer (Overlay) */}
-      <Drawer />
+        {drawerOpen && (
+          <aside className="col-start-3 col-end-4 row-start-2 row-end-3">
+            <Drawer />
+          </aside>
+        )}
+      </div>
     </div>
   );
 }

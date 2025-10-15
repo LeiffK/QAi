@@ -62,7 +62,7 @@ export interface TimeSeriesPoint {
 
 // Constants
 export const DEFECT_TYPES = ['Verformung', 'Nuss-Qualität', 'Verpackung', 'Gewicht', 'Optik'];
-export const SHIFTS = ['Früh', 'Spät', 'Nacht'];
+export const SHIFTS = ['Früh', 'Spät', 'Nacht'] as const;
 export const WEEKDAYS = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
 export const MONTHS = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 
@@ -96,7 +96,7 @@ export const SUPPLIERS: Supplier[] = [
 // Helper functions
 const random = (min: number, max: number) => Math.random() * (max - min) + min;
 const randomInt = (min: number, max: number) => Math.floor(random(min, max + 1));
-const randomChoice = <T,>(arr: T[]): T => arr[randomInt(0, arr.length - 1)];
+const randomChoice = <T,>(arr: readonly T[]): T => arr[randomInt(0, arr.length - 1)];
 
 // Generate time series with realistic patterns
 export const generateTimeSeries = (days: number = 30): TimeSeriesPoint[] => {
@@ -306,8 +306,8 @@ export const generateSeasonalityData = (): { month: string; defectType: string; 
 };
 
 // Generate shift heatmap data
-export const generateShiftData = (): { shift: string; weekday: string; value: number }[] => {
-  const data: { shift: string; weekday: string; value: number }[] = [];
+export const generateShiftData = (): { shift: typeof SHIFTS[number]; weekday: string; value: number }[] => {
+  const data: { shift: typeof SHIFTS[number]; weekday: string; value: number }[] = [];
 
   SHIFTS.forEach(shift => {
     WEEKDAYS.forEach((weekday, dayIndex) => {

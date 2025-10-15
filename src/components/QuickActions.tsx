@@ -1,5 +1,5 @@
 import { useStore } from '../store/useStore';
-import { AlertTriangle, Clock, Package, Trophy, RotateCcw } from 'lucide-react';
+import { AlertTriangle, Clock, Package, RotateCcw, Trophy } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface QuickAction {
@@ -63,30 +63,23 @@ export const QuickActions = () => {
   ];
 
   return (
-    <div className="card p-4 mb-6">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-sm font-medium text-dark-muted">Quick Actions:</span>
+    <div className="flex flex-col gap-3 rounded-2xl border border-dark-border/70 bg-dark-surface/80 px-5 py-4 shadow-[0_18px_42px_-30px_rgba(15,23,42,0.8)]">
+      <div className="flex items-center justify-between">
+        <span className="text-xs uppercase tracking-[0.35em] text-dark-muted">Quick Actions</span>
+        <span className="text-[10px] uppercase tracking-[0.4em] text-dark-muted/70">Direktzugriff</span>
       </div>
-      <div className="flex items-center gap-2 flex-wrap">
-        {actions.map((action) => {
-          const Icon = action.icon;
-          return (
-            <button
-              key={action.id}
-              onClick={action.action}
-              className="group relative flex items-center gap-2 px-4 py-2 bg-dark-border hover:bg-primary-600 text-dark-text hover:text-white rounded-lg transition-all font-medium text-sm"
-              title={action.description}
-            >
-              <Icon className="w-4 h-4" />
-              <span>{action.label}</span>
-
-              {/* Tooltip */}
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-dark-surface border border-dark-border rounded-lg text-xs text-dark-text whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                {action.description}
-              </div>
-            </button>
-          );
-        })}
+      <div className="flex flex-wrap items-center gap-3">
+        {actions.map(({ id, label, icon: Icon, action, description }) => (
+          <button
+            key={id}
+            onClick={action}
+            title={description}
+            className="group flex min-h-[48px] items-center gap-3 rounded-xl border border-transparent bg-dark-bg/60 px-4 py-2 text-sm font-semibold text-dark-text transition-all duration-200 hover:-translate-y-[1px] hover:border-primary-500 hover:bg-primary-900/20 hover:text-primary-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+          >
+            <Icon className="h-5 w-5 flex-shrink-0 text-primary-300 transition-transform duration-200 group-hover:scale-110" />
+            <span>{label}</span>
+          </button>
+        ))}
       </div>
     </div>
   );

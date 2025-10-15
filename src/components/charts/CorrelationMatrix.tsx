@@ -4,16 +4,14 @@ import { CORRELATION_MATRIX } from '../../data/mockData';
 const FACTORS = ['Saison', 'Schicht', 'Linie', 'Wartung', 'Lieferant', 'Ausbringung'];
 
 export const CorrelationMatrix = () => {
-  // Transform data for heatmap
-  const data = CORRELATION_MATRIX.map((d) => ({
-    x: FACTORS.indexOf(d.factor1),
-    y: FACTORS.indexOf(d.factor2),
-    value: d.correlation,
-    factor1: d.factor1,
-    factor2: d.factor2,
+  const data = CORRELATION_MATRIX.map((entry) => ({
+    x: FACTORS.indexOf(entry.factor1),
+    y: FACTORS.indexOf(entry.factor2),
+    value: entry.correlation,
+    factor1: entry.factor1,
+    factor2: entry.factor2,
   }));
 
-  // Color scale (blue for positive correlation)
   const getColor = (value: number) => {
     if (value > 0.7) return '#2563eb';
     if (value > 0.4) return '#3b82f6';
@@ -24,23 +22,23 @@ export const CorrelationMatrix = () => {
 
   return (
     <div className="card p-5" id="correlation">
-      <h3 className="text-lg font-semibold mb-4">Korrelations-Matrix</h3>
+      <h3 className="mb-4 text-lg font-semibold">Korrelations-Matrix</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart
-            margin={{ top: 20, right: 20, bottom: 100, left: 100 }}
-          >
+          <ScatterChart margin={{ top: 20, right: 24, bottom: 120, left: 120 }}>
             <XAxis
               type="number"
               dataKey="x"
               domain={[0, 5]}
               ticks={[0, 1, 2, 3, 4, 5]}
               tickFormatter={(value) => FACTORS[value] || ''}
-              stroke="#9ca3af"
+              stroke="#94a3b8"
+              tick={{ fill: '#94a3b8', fontSize: 12 }}
               angle={-45}
               textAnchor="end"
-              height={80}
+              height={90}
+              tickMargin={16}
             />
             <YAxis
               type="number"
@@ -48,21 +46,23 @@ export const CorrelationMatrix = () => {
               domain={[0, 5]}
               ticks={[0, 1, 2, 3, 4, 5]}
               tickFormatter={(value) => FACTORS[value] || ''}
-              stroke="#9ca3af"
-              width={90}
+              stroke="#94a3b8"
+              tick={{ fill: '#94a3b8', fontSize: 12 }}
+              width={120}
+              tickMargin={12}
             />
             <ZAxis type="number" dataKey="value" range={[600, 600]} />
             <Tooltip
               content={({ payload }) => {
                 if (payload && payload.length > 0) {
-                  const data = payload[0].payload;
+                  const current = payload[0].payload;
                   return (
-                    <div className="bg-dark-surface border border-dark-border rounded-lg px-3 py-2 shadow-lg">
+                    <div className="rounded-lg border border-dark-border bg-dark-surface px-3 py-2 shadow-lg">
                       <div className="text-sm font-medium text-dark-text">
-                        {data.factor1} × {data.factor2}
+                        {current.factor1} – {current.factor2}
                       </div>
                       <div className="text-sm text-primary-400">
-                        Korrelation: {data.value.toFixed(2)}
+                        Korrelation: {current.value.toFixed(2)}
                       </div>
                     </div>
                   );
@@ -80,7 +80,7 @@ export const CorrelationMatrix = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
+        📌 <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { ResponsiveContainer, ComposedChart, Line, Scatter, XAxis, YAxis, Tooltip, Legend, ReferenceLine } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Tooltip, Legend, ReferenceLine } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { TIME_SERIES, MAINTENANCE_EVENTS, LINES } from '../../data/mockData';
 import { filterTimeSeries } from '../../utils/filterData';
@@ -10,36 +10,41 @@ export const MaintenanceTimeline = () => {
   const chartData = useMemo(() => {
     const filtered = filterTimeSeries(TIME_SERIES, filters, brushSelection);
 
-    // Group by timestamp, average defect rate
-    const grouped = filtered.reduce((acc, point) => {
-      const timeKey = point.timestamp.toLocaleString('de-DE', { month: 'short', day: 'numeric' });
-      if (!acc[timeKey]) {
-        acc[timeKey] = {
-          time: timeKey,
-          timestamp: point.timestamp,
-          defectRate: 0,
-          count: 0,
-        };
-      }
-      acc[timeKey].defectRate += point.defectRate;
-      acc[timeKey].count += 1;
-      return acc;
-    }, {} as Record<string, any>);
+    const grouped = filtered.reduce<Record<string, { time: string; timestamp: Date; defectRate: number; count: number }>>(
+      (acc, point) => {
+        const timeKey = point.timestamp.toLocaleString('de-DE', { month: 'short', day: 'numeric' });
+        if (!acc[timeKey]) {
+          acc[timeKey] = {
+            time: timeKey,
+            timestamp: point.timestamp,
+            defectRate: 0,
+            count: 0,
+          };
+        }
+        acc[timeKey].defectRate += point.defectRate;
+        acc[timeKey].count += 1;
+        return acc;
+      },
+      {}
+    );
 
     return Object.values(grouped)
-      .map((d: any) => ({
-        time: d.time,
-        timestamp: d.timestamp,
-        defectRate: d.defectRate / d.count,
+      .map((value) => ({
+        time: value.time,
+        timestamp: value.timestamp,
+        defectRate: value.defectRate / value.count,
       }))
-      .sort((a, b) => a.timestamp - b.timestamp);
+      .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
   }, [filters, brushSelection]);
 
-  // Map maintenance events to chart data
   const maintenanceMarkers = useMemo(() => {
+    if (chartData.length === 0) {
+      return [];
+    }
+
     const dateRange = {
-      start: chartData[0]?.timestamp || new Date(),
-      end: chartData[chartData.length - 1]?.timestamp || new Date(),
+      start: chartData[0].timestamp,
+      end: chartData[chartData.length - 1].timestamp,
     };
 
     return MAINTENANCE_EVENTS.filter(
@@ -52,80 +57,47 @@ export const MaintenanceTimeline = () => {
       return {
         time: event.timestamp.toLocaleString('de-DE', { month: 'short', day: 'numeric' }),
         timestamp: event.timestamp,
-        maintenance: 8, // Y-position for marker
+        label: event.type === 'Geplant' ? 'Plan' : 'Akut',
+        stroke: event.type === 'Geplant' ? '#10b981' : '#2563eb',
+        line: line?.name ?? event.lineId,
         type: event.type,
-        line: line?.name || event.lineId,
       };
     });
   }, [chartData, filters]);
 
   return (
     <div className="card p-5" id="maintenance">
-      <h3 className="text-lg font-semibold mb-4">Wartung & Fehlerrate</h3>
+      <h3 className="mb-4 text-lg font-semibold">Wartung & Fehlerrate</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 60 }}>
-            <XAxis
-              dataKey="time"
-              stroke="#9ca3af"
-              angle={-45}
-              textAnchor="end"
-              height={80}
-            />
+            <XAxis dataKey="time" stroke="#94a3b8" angle={-45} textAnchor="end" height={80} />
             <YAxis
-              stroke="#9ca3af"
-              label={{ value: 'Fehlerrate (%)', angle: -90, position: 'insideLeft', style: { fill: '#9ca3af' } }}
+              stroke="#94a3b8"
+              label={{ value: 'Fehlerrate (%)', angle: -90, position: 'insideLeft', style: { fill: '#94a3b8' } }}
               domain={[0, 'auto']}
             />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#131827',
-                border: '1px solid #1f2937',
-                borderRadius: '8px',
+                backgroundColor: '#101522',
+                border: '1px solid rgba(148,163,184,0.35)',
+                borderRadius: 12,
               }}
               labelStyle={{ color: '#e5e7eb' }}
-              content={({ payload }) => {
-                if (payload && payload.length > 0) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-dark-surface border border-dark-border rounded-lg px-3 py-2 shadow-lg">
-                      <div className="text-sm font-medium text-dark-text">{data.time}</div>
-                      {data.defectRate !== undefined && (
-                        <div className="text-sm text-primary-400">Fehlerrate: {data.defectRate.toFixed(2)}%</div>
-                      )}
-                      {data.type && (
-                        <>
-                          <div className="text-sm text-yellow-400">Wartung: {data.type}</div>
-                          <div className="text-sm text-dark-muted">{data.line}</div>
-                        </>
-                      )}
-                    </div>
-                  );
-                }
-                return null;
-              }}
+              formatter={(value: number) => [`${value.toFixed(2)}%`, 'Fehlerrate']}
             />
             <Legend />
 
-            {/* Defect rate line */}
-            <Line
-              type="monotone"
-              dataKey="defectRate"
-              name="Fehlerrate"
-              stroke="#3b82f6"
-              strokeWidth={2}
-              dot={false}
-            />
+            <Line type="monotone" dataKey="defectRate" name="Fehlerrate" stroke="#3b82f6" strokeWidth={2} dot={false} />
 
-            {/* Maintenance markers */}
             {maintenanceMarkers.map((marker, idx) => (
               <ReferenceLine
-                key={idx}
+                key={`${marker.time}-${idx}`}
                 x={marker.time}
-                stroke={marker.type === 'Geplant' ? '#10b981' : '#ef4444'}
+                stroke={marker.stroke}
                 strokeDasharray="3 3"
-                label={{ value: '🔧', position: 'top' }}
+                label={{ value: marker.label, position: 'top', fill: '#94a3b8' }}
               />
             ))}
           </ComposedChart>
@@ -133,7 +105,7 @@ export const MaintenanceTimeline = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Erkenntnis:</strong> Fehlerrate steigt vor Wartung leicht an, sinkt danach ab.
+        Hinweis: <strong>Fehlerraten</strong> steigen vor Wartungen leicht an und stabilisieren sich nach Abschluss.
       </div>
     </div>
   );

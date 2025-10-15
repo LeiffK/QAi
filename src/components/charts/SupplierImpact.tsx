@@ -1,72 +1,62 @@
 import { useMemo } from 'react';
-import { ResponsiveContainer, ComposedChart, Bar, Scatter, XAxis, YAxis, Tooltip, Legend, Cell } from 'recharts';
+import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Legend, Cell } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { SUPPLIER_IMPACT_DATA } from '../../data/mockData';
+
+interface SupplierLot {
+  lotNumber: string;
+  defectRate: number;
+}
+
+interface SupplierBar {
+  supplier: string;
+  supplierId: string;
+  median: number;
+  lots: SupplierLot[];
+}
 
 export const SupplierImpact = () => {
   const { setFilter, highlightedSupplier, setHighlightedSupplier } = useStore();
 
-  const chartData = useMemo(() => {
-    return SUPPLIER_IMPACT_DATA.map((d) => ({
-      supplier: d.supplier,
-      supplierId: d.supplierId,
-      median: d.medianDefectRate,
-      lots: d.lots,
-    }));
-  }, []);
+  const chartData = useMemo<SupplierBar[]>(
+    () =>
+      SUPPLIER_IMPACT_DATA.map((entry) => ({
+        supplier: entry.supplier,
+        supplierId: entry.supplierId,
+        median: entry.medianDefectRate,
+        lots: entry.lots,
+      })),
+    []
+  );
 
-  const handleBarClick = (data: any) => {
+  const handleBarClick = (data: SupplierBar) => {
     setFilter('supplierId', data.supplierId);
-    // Scroll to supplier detail (could be implemented)
   };
 
   return (
     <div className="card p-5" id="supplier-impact">
-      <h3 className="text-lg font-semibold mb-4">Lieferanten-Impact</h3>
+      <h3 className="mb-4 text-lg font-semibold">Lieferanten-Impact</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-            layout="vertical"
-          >
+          <ComposedChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 80 }} layout="vertical">
             <XAxis
               type="number"
-              stroke="#9ca3af"
-              label={{ value: 'Fehlerrate (%)', position: 'bottom', style: { fill: '#9ca3af' } }}
+              stroke="#94a3b8"
+              label={{ value: 'Fehlerrate (%)', position: 'bottom', style: { fill: '#94a3b8' } }}
               domain={[0, 'auto']}
             />
-            <YAxis
-              type="category"
-              dataKey="supplier"
-              stroke="#9ca3af"
-              width={120}
-            />
+            <YAxis type="category" dataKey="supplier" stroke="#94a3b8" width={140} />
             <Tooltip
               contentStyle={{
-                backgroundColor: '#131827',
-                border: '1px solid #1f2937',
-                borderRadius: '8px',
+                backgroundColor: '#101522',
+                border: '1px solid rgba(148,163,184,0.35)',
+                borderRadius: 12,
               }}
-              labelStyle={{ color: '#e5e7eb' }}
-              content={({ payload }) => {
-                if (payload && payload.length > 0) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-dark-surface border border-dark-border rounded-lg px-3 py-2 shadow-lg">
-                      <div className="text-sm font-medium text-dark-text">{data.supplier}</div>
-                      <div className="text-sm text-primary-400">Median: {data.median.toFixed(2)}%</div>
-                      <div className="text-sm text-dark-muted">{data.lots.length} Lots</div>
-                    </div>
-                  );
-                }
-                return null;
-              }}
+              formatter={(value: number) => [`${value.toFixed(2)}%`, 'Median Fehlerrate']}
             />
             <Legend />
 
-            {/* Median bars */}
             <Bar
               dataKey="median"
               name="Median Fehlerrate"
@@ -76,14 +66,14 @@ export const SupplierImpact = () => {
               onMouseLeave={() => setHighlightedSupplier(null)}
               style={{ cursor: 'pointer' }}
             >
-              {chartData.map((entry, index) => (
+              {chartData.map((entry) => (
                 <Cell
-                  key={`cell-${index}`}
+                  key={entry.supplierId}
                   fill={
                     highlightedSupplier === entry.supplierId
                       ? '#60a5fa'
                       : entry.supplierId === 'S4'
-                      ? '#ef4444'
+                      ? '#1d4ed8'
                       : '#3b82f6'
                   }
                 />
@@ -94,7 +84,7 @@ export const SupplierImpact = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Erkenntnis:</strong> Lieferant X zeigt deutlich höhere Fehlerrate (rot markiert). Klicken filtert.
+        Hinweis: <strong>Lieferant X</strong> weist eine deutlich höhere Fehlerrate auf – Auswahl setzt den Lieferantenfilter.
       </div>
     </div>
   );

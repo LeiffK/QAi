@@ -1,42 +1,56 @@
 import { useStore } from '../store/useStore';
-import { LayoutDashboard, Factory, BarChart3, AlertTriangle, Trophy, Search } from 'lucide-react';
+import {
+  AlertTriangle,
+  BarChart3,
+  Factory,
+  LayoutDashboard,
+  Search,
+  Trophy,
+} from 'lucide-react';
+
+const tabs = [
+  { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'plants', label: 'Werke', icon: Factory },
+  { id: 'insights', label: 'Insights', icon: BarChart3 },
+  { id: 'alerts', label: 'Alarme', icon: AlertTriangle },
+  { id: 'ranking', label: 'Ranking', icon: Trophy },
+  { id: 'traceability', label: 'Traceability', icon: Search },
+] as const;
 
 export const Navigation = () => {
   const { activeTab, setActiveTab } = useStore();
 
-  const tabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'plants', label: 'Werke', icon: Factory },
-    { id: 'insights', label: 'Insights', icon: BarChart3 },
-    { id: 'alerts', label: 'Alarme', icon: AlertTriangle },
-    { id: 'ranking', label: 'Ranking', icon: Trophy },
-    { id: 'traceability', label: 'Traceability', icon: Search },
-  ];
-
   return (
-    <div className="card mb-6">
-      <div className="flex border-b border-dark-border">
-        {tabs.map((tab) => {
-          const Icon = tab.icon;
+    <nav className="sticky top-[6.5rem] flex max-h-[calc(100vh-7.5rem)] flex-col overflow-hidden rounded-2xl border border-dark-border/80 bg-dark-surface/80 shadow-[0_18px_42px_-30px_rgba(15,23,42,0.8)]">
+      <div className="px-6 pb-4 pt-6">
+        <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Navigation</span>
+      </div>
+      <div className="flex-1 space-y-1 overflow-y-auto px-3 pb-6">
+        {tabs.map(({ id, label, icon: Icon }) => {
+          const isActive = activeTab === id;
           return (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`
-                flex items-center gap-2 px-6 py-4 font-medium transition-all
-                ${
-                  activeTab === tab.id
-                    ? 'text-primary-400 border-b-2 border-primary-400 bg-primary-900/10'
-                    : 'text-dark-muted hover:text-dark-text hover:bg-dark-border/30'
-                }
-              `}
+              key={id}
+              type="button"
+              onClick={() => setActiveTab(id)}
+              title={label}
+              className={`group relative flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+                isActive
+                  ? 'bg-primary-900/25 text-primary-100 shadow-inner'
+                  : 'text-dark-muted hover:bg-dark-border/40 hover:text-primary-50'
+              }`}
             >
-              <Icon className="w-5 h-5" />
-              <span>{tab.label}</span>
+              <span
+                className={`absolute left-0 top-1/2 h-8 -translate-y-1/2 rounded-r-full transition-all ${
+                  isActive ? 'w-1 bg-primary-400' : 'w-0 bg-transparent group-hover:w-1 group-hover:bg-primary-600'
+                }`}
+              />
+              <Icon className={`h-5 w-5 flex-shrink-0 ${isActive ? 'text-primary-300' : 'text-dark-muted group-hover:text-primary-200'}`} />
+              <span className="truncate">{label}</span>
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 };

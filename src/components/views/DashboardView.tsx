@@ -13,7 +13,7 @@ import {
   ArrowRight,
   Calendar
 } from 'lucide-react';
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, AreaChart, Area, ReferenceLine } from 'recharts';
+import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, ReferenceLine } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { PLANTS, LINES, BATCHES, PRODUCTS, SHIFTS } from '../../data/mockData';
 import { filterBatches, calculateKPIs, calculateQualityScore } from '../../utils/filterData';
@@ -130,27 +130,6 @@ export const DashboardView = () => {
   }, [trendData]);
 
   // Heatmap Calendar Data (last 30 days)
-  const calendarData = useMemo(() => {
-    const allBatches = filterBatches(BATCHES, filters, brushSelection);
-    const dayMap = new Map();
-
-    allBatches.forEach((batch) => {
-      const dateKey = batch.timestamp.toLocaleDateString('de-DE');
-      if (!dayMap.has(dateKey)) {
-        dayMap.set(dateKey, []);
-      }
-      dayMap.get(dateKey).push(batch.defectRate);
-    });
-
-    const days = Array.from(dayMap.entries()).map(([date, rates]) => ({
-      date,
-      avgDefectRate: rates.reduce((sum, r) => sum + r, 0) / rates.length,
-      count: rates.length,
-    })).slice(-30);
-
-    return days;
-  }, [filters, brushSelection]);
-
   // Product Performance
   const productPerformance = useMemo(() => {
     return PRODUCTS.map((product) => {
