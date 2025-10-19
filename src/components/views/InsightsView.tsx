@@ -15,8 +15,8 @@ export const InsightsView = () => {
   }));
 
   const categories = [
-    { id: 'all' as InsightCategory, label: 'Alle', icon: 'â—Ž' },
-    { id: 'quality' as InsightCategory, label: 'Qualitaet', icon: 'Q' },
+    { id: 'all' as InsightCategory, label: 'Alle', icon: 'A' },
+    { id: 'quality' as InsightCategory, label: 'Qualität', icon: 'Q' },
     { id: 'production' as InsightCategory, label: 'Produktion', icon: 'P' },
     { id: 'suppliers' as InsightCategory, label: 'Lieferanten', icon: 'L' },
     { id: 'correlations' as InsightCategory, label: 'Korrelationen', icon: 'K' },

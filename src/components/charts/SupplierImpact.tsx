@@ -84,7 +84,7 @@ export const SupplierImpact = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        Hinweis: <strong>Lieferant X</strong> weist eine deutlich höhere Fehlerrate auf â€“ Auswahl setzt den Lieferantenfilter.
+        Hinweis: <strong>Lieferant X</strong> weist eine deutlich höhere Fehlerrate auf - Auswahl setzt den Lieferantenfilter.
       </div>
     </div>
   );

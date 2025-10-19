@@ -40,7 +40,7 @@ export const LineComparison = () => {
 
   return (
     <div className="card p-5" id="line-comparison">
-      <h3 className="text-lg font-semibold mb-4">Linienvergleich â€“ Fehlerrate im Zeitverlauf</h3>
+      <h3 className="text-lg font-semibold mb-4">Linienvergleich Fehlerrate im Zeitverlauf</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">

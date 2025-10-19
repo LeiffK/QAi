@@ -22,7 +22,7 @@ export const ShiftHeatmap = () => {
 
   return (
     <div className="card p-5" id="shift-pattern">
-      <h3 className="mb-4 text-lg font-semibold">Schichtmuster â€“ Fehlerrate nach Wochentag</h3>
+      <h3 className="mb-4 text-lg font-semibold">Schichtmuster - Fehlerrate nach Wochentag</h3>
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">

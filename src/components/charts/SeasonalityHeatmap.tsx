@@ -22,7 +22,7 @@ export const SeasonalityHeatmap = () => {
 
   return (
     <div className="card p-5" id="seasonality">
-      <h3 className="mb-4 text-lg font-semibold">Saisonalität â€“ Defekte nach Monat</h3>
+      <h3 className="mb-4 text-lg font-semibold">Saisonalität Defekte nach Monat</h3>
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
@@ -71,7 +71,7 @@ export const SeasonalityHeatmap = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        Hinweis: <strong>Verformungen</strong> nehmen in den Sommermonaten (Juniâ€“August) spürbar zu.
+        Hinweis: <strong>Verformungen</strong> nehmen in den Sommermonaten (Juni - August) spürbar zu.
       </div>
     </div>
   );

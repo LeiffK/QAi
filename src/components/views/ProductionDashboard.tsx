@@ -171,7 +171,7 @@ export const ProductionDashboard = () => {
           Schichtcockpit Produktion - Sicherheit im Fokus
         </h2>
         <p className="text-sm text-dark-muted">
-          Alle Kennzahlen der aktiven Schicht auf einen Blick. Drei Klicks fuehren von der Anmeldung
+          Alle Kennzahlen der aktiven Schicht auf einen Blick. Drei Klicks führen von der Anmeldung
           zur Detailcharge mit konkreter Massnahme.
         </p>
       </div>

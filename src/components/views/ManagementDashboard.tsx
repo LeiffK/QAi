@@ -103,7 +103,7 @@ export const ManagementDashboard = () => {
         reason = 'Mehrere Kennzahlen überschreiten Warnschwelle';
       } else if (qualityScore < 75 || kpis.defectRate > 4) {
         status = 'watch';
-        reason = 'Erhöhte Fehlerrate â€“ MaÃŸnahmen prüfen';
+        reason = 'Erhöhte Fehlerrate - Maßnahmen prüfen';
       }
 
       return {
@@ -258,7 +258,7 @@ export const ManagementDashboard = () => {
       <header className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold text-primary-100 flex items-center gap-3">
           <Factory className="h-6 w-6 text-primary-200" />
-          Werks-KPI-Board â€“ klare Ampeln, klare Entscheidungen
+          Werks-KPI-Board - klare Ampeln, klare Entscheidungen
         </h2>
         <p className="text-sm text-dark-muted">
           Qualitätsstatus je Werk mit Begründung, Frühwarnung der nächsten 24 Stunden und Ranking
@@ -426,7 +426,7 @@ export const ManagementDashboard = () => {
                   </div>
                   <div className="flex-1">
                     <div className="text-primary-100">
-                      {line?.name ?? event.lineId} â€“ {event.type}
+                      {line?.name ?? event.lineId} {event.type}
                     </div>
                     <div className="text-xs text-dark-muted">
                       Dauer {event.duration} h Â· proaktive Prüfung empfohlen.
@@ -443,7 +443,7 @@ export const ManagementDashboard = () => {
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-primary-100 flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-primary-200" />
-            Ranking â€“ Schnellstart Drill-down
+            Ranking Schnellstart Drill-down
           </h3>
           <div className="text-xs text-dark-muted flex items-center gap-2">
             <Target className="h-4 w-4" />

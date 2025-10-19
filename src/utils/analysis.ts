@@ -86,7 +86,7 @@ const DEFAULT_LIBRARY_ENTRY = {
     'Schichtleiter informieren und Ursachenanalyse starten',
     'Stichproben verdoppeln, bis Ursache identifiziert ist',
   ],
-  risk: 'Unbekanntes Risiko â€“ erhoehte Ueberwachung erforderlich.',
+  risk: 'Unbekanntes Risiko - erhöhte Überwachung erforderlich.',
 };
 
 const determineSeverity = (defectRate: number): SeverityLevel => {

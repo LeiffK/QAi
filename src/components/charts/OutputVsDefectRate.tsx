@@ -67,7 +67,7 @@ export const OutputVsDefectRate = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        ðŸ’¡ <strong>Erkenntnis:</strong> Leicht positive Korrelation â€“ höhere Ausbringung = leicht mehr Fehler.
+        ðŸ’¡ <strong>Erkenntnis:</strong> Leicht positive Korrelation höhere Ausbringung = leicht mehr Fehler.
       </div>
     </div>
   );
