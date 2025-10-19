@@ -40,6 +40,26 @@ export const Drawer = () => {
     setSavedMessage(null);
   }, [drawerContent, drawerData]);
 
+  useEffect(() => {
+    if (!drawerOpen) return;
+    if (typeof document === 'undefined') return;
+
+    const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        closeDrawer();
+      }
+    };
+
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [drawerOpen, closeDrawer]);
+
   if (!drawerOpen || !drawerData) {
     return null;
   }
@@ -53,29 +73,40 @@ export const Drawer = () => {
   };
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-dark-border/70 bg-dark-surface/90 shadow-[0_24px_60px_-35px_rgba(15,23,42,0.85)]">
-      <div className="sticky top-0 z-10 flex items-center justify-between border-b border-dark-border/60 bg-dark-surface/95 px-6 py-5">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.3em] text-dark-muted">Detailansicht</p>
-          <h2 className="text-xl font-semibold text-primary-200">
-            {drawerContent === 'batch' ? `Charge ${batch.id}` : 'Details'}
-          </h2>
+    <div className="fixed inset-0 z-[120] flex items-center justify-center px-4 py-8 sm:px-6">
+      <div
+        className="absolute inset-0 bg-dark-bg/80 backdrop-blur-sm transition-opacity"
+        onClick={closeDrawer}
+        aria-hidden="true"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={drawerContent === 'batch' ? `Charge ${batch.id}` : 'Details'}
+        className="relative z-10 flex h-full max-h-[90vh] w-full max-w-5xl flex-col rounded-3xl border border-dark-border/70 bg-dark-surface/95 shadow-[0_24px_60px_-35px_rgba(15,23,42,0.85)]"
+      >
+        <div className="sticky top-0 z-10 flex items-center justify-between rounded-t-3xl border-b border-dark-border/60 bg-dark-surface/95 px-6 py-5">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-dark-muted">Detailansicht</p>
+            <h2 className="text-xl font-semibold text-primary-200">
+              {drawerContent === 'batch' ? `Charge ${batch.id}` : 'Details'}
+            </h2>
+          </div>
+          <button
+            onClick={closeDrawer}
+            className="btn btn-secondary flex h-10 w-10 items-center justify-center rounded-xl border-dark-border/60 bg-dark-bg/60 text-dark-muted transition-all hover:border-primary-500 hover:bg-primary-900/20 hover:text-primary-100"
+            aria-label="Detailbereich schliessen"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
-        <button
-          onClick={closeDrawer}
-          className="btn btn-secondary flex h-10 w-10 items-center justify-center rounded-xl border-dark-border/60 bg-dark-bg/60 text-dark-muted transition-all hover:border-primary-500 hover:bg-primary-900/20 hover:text-primary-100"
-          aria-label="Detailbereich schliessen"
-        >
-          <X className="h-5 w-5" />
-        </button>
-      </div>
 
-      <div className="scrollbar-thin flex-1 overflow-y-auto space-y-6 px-6 py-6">
-        {drawerContent === 'batch' && (
-          <>
+        <div className="scrollbar-thin flex-1 overflow-y-auto space-y-6 px-6 py-6">
+          {drawerContent === 'batch' && (
+            <>
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
               <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
-                Ueberblick
+                Überblick
               </h3>
               <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
                 <InfoItem label="Werk" value={batch.plantName} />
@@ -118,7 +149,7 @@ export const Drawer = () => {
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5 space-y-4">
               <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200 flex items-center gap-2">
                 <ClipboardCheck className="h-4 w-4 text-primary-200" />
-                Gefuehrte Fehleranalyse
+                Geführte Fehleranalyse
               </h3>
               <div className="rounded-xl border border-dark-border/60 bg-dark-surface/60 px-4 py-3 text-sm text-dark-muted leading-relaxed">
                 {batch.analysis.summary}
@@ -230,6 +261,7 @@ export const Drawer = () => {
           </>
         )}
       </div>
+    </div>
     </div>
   );
 };

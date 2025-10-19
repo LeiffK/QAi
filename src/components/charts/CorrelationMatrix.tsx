@@ -59,7 +59,7 @@ export const CorrelationMatrix = () => {
                   return (
                     <div className="rounded-lg border border-dark-border bg-dark-surface px-3 py-2 shadow-lg">
                       <div className="text-sm font-medium text-dark-text">
-                        {current.factor1} â€“ {current.factor2}
+                        {current.factor1} {current.factor2}
                       </div>
                       <div className="text-sm text-primary-400">
                         Korrelation: {current.value.toFixed(2)}

@@ -58,13 +58,25 @@ export const ManagementDashboard = () => {
     setFilter,
     setActiveTab,
     setSelectedPlantId,
+    accessiblePlantIds,
   } = useStore((state) => ({
     filters: state.filters,
     brushSelection: state.brushSelection,
     setFilter: state.setFilter,
     setActiveTab: state.setActiveTab,
     setSelectedPlantId: state.setSelectedPlantId,
+    accessiblePlantIds: state.accessiblePlantIds,
   }));
+
+  const plantScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? PLANTS.filter((plant) => accessiblePlantIds.includes(plant.id))
+      : PLANTS;
+
+  const lineScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? LINES.filter((line) => accessiblePlantIds.includes(line.plantId))
+      : LINES;
 
   const batches = useMemo(() => {
     const filtered = filterBatches(BATCHES, filters, brushSelection);
@@ -72,7 +84,7 @@ export const ManagementDashboard = () => {
   }, [filters, brushSelection]);
 
   const plantCards = useMemo<PlantCard[]>(() => {
-    return PLANTS.map((plant) => {
+    return plantScope.map((plant) => {
       const plantBatches = batches.filter((batch) => batch.plantId === plant.id);
       if (plantBatches.length === 0) {
         return {
@@ -118,7 +130,7 @@ export const ManagementDashboard = () => {
         reason,
       };
     });
-  }, [batches]);
+  }, [batches, accessiblePlantIds]);
 
   const forecast = useMemo<ForecastInsight>(() => {
     if (batches.length < 6) {
@@ -157,7 +169,7 @@ export const ManagementDashboard = () => {
       trend,
       warning,
     };
-  }, [batches]);
+  }, [batches, accessiblePlantIds]);
 
   const maintenanceEvents = useMemo(() => {
     return MAINTENANCE_EVENTS.filter((event) => {
@@ -184,7 +196,7 @@ export const ManagementDashboard = () => {
       }))
       .slice(0, 3);
 
-    const lineRanking = LINES.map((line) => {
+    const lineRanking = lineScope.map((line) => {
       const lineBatches = batches.filter((batch) => batch.lineId === line.id);
       if (lineBatches.length === 0) {
         return null;
@@ -241,7 +253,7 @@ export const ManagementDashboard = () => {
       supplierRanking,
       productRanking,
     };
-  }, [plantCards, batches]);
+  }, [plantCards, batches, accessiblePlantIds]);
 
   const openPlant = (plantId: string) => {
     setSelectedPlantId(plantId);

@@ -97,6 +97,11 @@ export const SUPPLIERS: Supplier[] = [
 const random = (min: number, max: number) => Math.random() * (max - min) + min;
 const randomInt = (min: number, max: number) => Math.floor(random(min, max + 1));
 const randomChoice = <T,>(arr: readonly T[]): T => arr[randomInt(0, arr.length - 1)];
+const hoursAgo = (hours: number) => {
+  const date = new Date();
+  date.setHours(date.getHours() - hours);
+  return date;
+};
 
 // Generate time series with realistic patterns
 export const generateTimeSeries = (days: number = 30): TimeSeriesPoint[] => {
@@ -275,6 +280,99 @@ export const generateBatches = (count: number = 500): Batch[] => {
 
   return batches.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
 };
+
+const manualBerlinLineBatches: Batch[] = [
+  {
+    id: 'C-BER-L1-501',
+    plantId: 'P1',
+    lineId: 'L1',
+    productId: 'PR1',
+    supplierId: 'S4',
+    lotNumber: 'L-BER-501',
+    timestamp: hoursAgo(6),
+    shift: SHIFTS[0],
+    defectRate: 4.8,
+    fpy: 93.1,
+    scrapRate: 1.5,
+    output: 4520,
+    defects: [
+      { type: 'Nuss-Qualität', count: 58 },
+      { type: 'Verformung', count: 32 },
+    ],
+  },
+  {
+    id: 'C-BER-L1-502',
+    plantId: 'P1',
+    lineId: 'L1',
+    productId: 'PR2',
+    supplierId: 'S2',
+    lotNumber: 'L-BER-502',
+    timestamp: hoursAgo(19),
+    shift: SHIFTS[1],
+    defectRate: 3.9,
+    fpy: 94.4,
+    scrapRate: 1.2,
+    output: 4680,
+    defects: [
+      { type: 'Verpackung', count: 41 },
+      { type: 'Optik', count: 18 },
+    ],
+  },
+  {
+    id: 'C-BER-L2-601',
+    plantId: 'P1',
+    lineId: 'L2',
+    productId: 'PR3',
+    supplierId: 'S1',
+    lotNumber: 'L-BER-601',
+    timestamp: hoursAgo(11),
+    shift: SHIFTS[0],
+    defectRate: 5.6,
+    fpy: 92.8,
+    scrapRate: 1.9,
+    output: 4380,
+    defects: [
+      { type: 'Verformung', count: 63 },
+      { type: 'Gewicht', count: 27 },
+    ],
+  },
+  {
+    id: 'C-BER-L2-602',
+    plantId: 'P1',
+    lineId: 'L2',
+    productId: 'PR1',
+    supplierId: 'S5',
+    lotNumber: 'L-BER-602',
+    timestamp: hoursAgo(28),
+    shift: SHIFTS[2],
+    defectRate: 4.3,
+    fpy: 93.7,
+    scrapRate: 1.4,
+    output: 4440,
+    defects: [
+      { type: 'Verpackung', count: 46 },
+      { type: 'Optik', count: 21 },
+    ],
+  },
+  {
+    id: 'C-BER-L2-603',
+    plantId: 'P1',
+    lineId: 'L2',
+    productId: 'PR2',
+    supplierId: 'S4',
+    lotNumber: 'L-BER-603',
+    timestamp: hoursAgo(45),
+    shift: SHIFTS[1],
+    defectRate: 6.2,
+    fpy: 91.9,
+    scrapRate: 2.1,
+    output: 4310,
+    defects: [
+      { type: 'Nuss-Qualität', count: 74 },
+      { type: 'Verformung', count: 33 },
+    ],
+  },
+];
 
 // Generate seasonality heatmap data
 export const generateSeasonalityData = (): { month: string; defectType: string; value: number }[] => {
@@ -488,7 +586,11 @@ export const generateCauseMap = (): { nodes: CauseNode[]; edges: CauseEdge[] } =
 // Initialize data
 export const TIME_SERIES = generateTimeSeries(30);
 export const MAINTENANCE_EVENTS = generateMaintenanceEvents();
-export const BATCHES = generateBatches(500);
+const generatedBatches = generateBatches(500);
+
+export const BATCHES = [...generatedBatches, ...manualBerlinLineBatches].sort(
+  (a, b) => b.timestamp.getTime() - a.timestamp.getTime()
+);
 export const SEASONALITY_DATA = generateSeasonalityData();
 export const SHIFT_DATA = generateShiftData();
 export const SUPPLIER_IMPACT_DATA = generateSupplierImpactData();

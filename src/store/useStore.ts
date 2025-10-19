@@ -50,6 +50,7 @@ interface RoleSettings {
   defaultSelectedPlantId?: string | null;
   defaultSelectedLineId?: string | null;
   defaultInsightsCategory?: InsightCategory;
+  allowedPlantIds?: string[];
 }
 
 interface RoleRuntimeDefaults {
@@ -67,6 +68,7 @@ interface Store {
 
   allowedTabs: TabId[];
   currentRoleDefaults: RoleRuntimeDefaults | null;
+  accessiblePlantIds: string[] | null;
 
   // Theme
   isDarkMode: boolean;
@@ -183,6 +185,7 @@ const ROLE_SETTINGS: Record<RoleKey, RoleSettings> = {
     defaultSelectedPlantId: defaultPlantId,
     defaultSelectedLineId: defaultLineId,
     defaultInsightsCategory: 'production',
+    allowedPlantIds: defaultPlantId ? [defaultPlantId] : undefined,
   },
   sabine: {
     username: 'Sabine',
@@ -234,6 +237,7 @@ export const useStore = create<Store>((set) => ({
   user: null,
   allowedTabs: ['dashboard', 'plants', 'insights', 'alerts', 'ranking', 'traceability'],
   currentRoleDefaults: defaultRoleDefaults,
+  accessiblePlantIds: null,
 
   // Theme
   isDarkMode: true,
@@ -248,7 +252,58 @@ export const useStore = create<Store>((set) => ({
   filters: initialFilters,
   setFilter: (key, value) =>
     set((state) => {
-      const updatedFilters = { ...state.filters, [key]: value };
+      const allowedPlantIds = state.accessiblePlantIds;
+
+      if (key === 'plantId') {
+        const updatedFilters = { ...state.filters };
+        let nextPlant = value as Filters['plantId'];
+
+        if (allowedPlantIds && allowedPlantIds.length > 0) {
+          const fallbackPlant = allowedPlantIds[0] ?? null;
+          if (!nextPlant || !allowedPlantIds.includes(nextPlant)) {
+            nextPlant = fallbackPlant ?? null;
+          }
+        }
+
+        updatedFilters.plantId = nextPlant ?? null;
+
+        if (updatedFilters.lineId) {
+          const line = LINES.find((l) => l.id === updatedFilters.lineId);
+          if (!line || (nextPlant && line.plantId !== nextPlant)) {
+            updatedFilters.lineId = null;
+          }
+        }
+
+        return { filters: updatedFilters };
+      }
+
+      if (key === 'lineId') {
+        const updatedFilters = { ...state.filters };
+        const requestedLine = value as Filters['lineId'];
+
+        if (!requestedLine) {
+          updatedFilters.lineId = null;
+          return { filters: updatedFilters };
+        }
+
+        const line = LINES.find((l) => l.id === requestedLine);
+        if (!line) {
+          return {};
+        }
+
+        if (allowedPlantIds && allowedPlantIds.length > 0 && !allowedPlantIds.includes(line.plantId)) {
+          return {};
+        }
+
+        updatedFilters.lineId = requestedLine;
+        if (updatedFilters.plantId !== line.plantId) {
+          updatedFilters.plantId = line.plantId;
+        }
+
+        return { filters: updatedFilters };
+      }
+
+      const updatedFilters = { ...state.filters, [key]: value } as Filters;
       return { filters: updatedFilters };
     }),
   resetFilters: () =>
@@ -326,10 +381,34 @@ export const useStore = create<Store>((set) => ({
 
   // Selected plant/line
   selectedPlantId: null,
-  setSelectedPlantId: (plantId) => set({ selectedPlantId: plantId }),
+  setSelectedPlantId: (plantId) =>
+    set((state) => {
+      const allowedPlantIds = state.accessiblePlantIds;
+      if (plantId && allowedPlantIds && !allowedPlantIds.includes(plantId)) {
+        return {};
+      }
+      return { selectedPlantId: plantId };
+    }),
 
   selectedLineId: null,
-  setSelectedLineId: (lineId) => set({ selectedLineId: lineId }),
+  setSelectedLineId: (lineId) =>
+    set((state) => {
+      if (!lineId) {
+        return { selectedLineId: null };
+      }
+      const line = LINES.find((item) => item.id === lineId);
+      if (!line) {
+        return {};
+      }
+      const allowedPlantIds = state.accessiblePlantIds;
+      if (allowedPlantIds && !allowedPlantIds.includes(line.plantId)) {
+        return {};
+      }
+      return {
+        selectedLineId: lineId,
+        selectedPlantId: state.selectedPlantId ?? line.plantId,
+      };
+    }),
 
   // Comparison mode
   comparisonLineIds: [],
@@ -363,6 +442,25 @@ export const useStore = create<Store>((set) => ({
     const config = ROLE_SETTINGS[role];
     const baseFilters = createBaseFilters();
     const mergedFilters: Filters = { ...baseFilters, ...config.defaultFilters };
+    const allowedPlantIdsConfig =
+      config.allowedPlantIds && config.allowedPlantIds.length > 0
+        ? [...config.allowedPlantIds]
+        : null;
+
+    if (allowedPlantIdsConfig && allowedPlantIdsConfig.length > 0) {
+      const fallbackPlant = allowedPlantIdsConfig[0] ?? null;
+      const currentPlant = mergedFilters.plantId;
+      const enforcedPlant =
+        currentPlant && allowedPlantIdsConfig.includes(currentPlant) ? currentPlant : fallbackPlant ?? null;
+      mergedFilters.plantId = enforcedPlant ?? null;
+
+      if (mergedFilters.lineId) {
+        const line = LINES.find((item) => item.id === mergedFilters.lineId);
+        if (!line || !allowedPlantIdsConfig.includes(line.plantId)) {
+          mergedFilters.lineId = null;
+        }
+      }
+    }
 
     const defaults: RoleRuntimeDefaults = {
       filters: mergedFilters,
@@ -377,6 +475,21 @@ export const useStore = create<Store>((set) => ({
       insightsCategory: config.defaultInsightsCategory ?? 'all',
       activeTab: config.defaultTab,
     };
+
+    if (allowedPlantIdsConfig && allowedPlantIdsConfig.length > 0) {
+      const fallbackPlant = allowedPlantIdsConfig[0] ?? null;
+      const ensurePlant = (candidate: string | null | undefined) =>
+        candidate && allowedPlantIdsConfig.includes(candidate) ? candidate : fallbackPlant ?? null;
+
+      defaults.selectedPlantId = ensurePlant(defaults.selectedPlantId);
+
+      if (defaults.selectedLineId) {
+        const line = LINES.find((item) => item.id === defaults.selectedLineId);
+        if (!line || !allowedPlantIdsConfig.includes(line.plantId)) {
+          defaults.selectedLineId = null;
+        }
+      }
+    }
 
     set({
       user: {
@@ -395,6 +508,7 @@ export const useStore = create<Store>((set) => ({
       comparisonLineIds: [],
       breadcrumbs: [],
       currentRoleDefaults: defaults,
+      accessiblePlantIds: allowedPlantIdsConfig,
     });
 
     return { success: true };
@@ -415,6 +529,7 @@ export const useStore = create<Store>((set) => ({
       drawerOpen: false,
       drawerContent: null,
       drawerData: null,
+      accessiblePlantIds: null,
     }),
 }));
 

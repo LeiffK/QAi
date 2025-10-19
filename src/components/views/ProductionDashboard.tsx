@@ -80,7 +80,7 @@ export const ProductionDashboard = () => {
     const scrapRate = batches.reduce((acc, batch) => acc + batch.scrapRate, 0) / total;
     const coverage =
       (batches.filter((batch) => batch.fpy >= 95).length / total) * 100;
-    const activeAlarms = batches.filter((batch) => batch.defectRate > 5).length;
+    const activeAlarms = batches.filter((batch) => batch.defectRate > 3).length;
 
     return {
       defectRate: Number(defectRate.toFixed(2)),
@@ -171,8 +171,7 @@ export const ProductionDashboard = () => {
           Schichtcockpit Produktion - Sicherheit im Fokus
         </h2>
         <p className="text-sm text-dark-muted">
-          Alle Kennzahlen der aktiven Schicht auf einen Blick. Drei Klicks führen von der Anmeldung
-          zur Detailcharge mit konkreter Massnahme.
+          Alle Kennzahlen der aktiven Schicht auf einen Blick.
         </p>
       </div>
 
@@ -181,31 +180,25 @@ export const ProductionDashboard = () => {
           icon={<AlertTriangle className="h-5 w-5 text-red-300" />}
           label="Fehlerrate"
           value={`${metrics.defectRate.toFixed(2)} %`}
-          helper="Grenzwert 3 %"
+          helper=""
         />
         <MetricCard
           icon={<ShieldCheck className="h-5 w-5 text-emerald-300" />}
           label="FPY"
           value={`${metrics.fpy.toFixed(1)} %`}
-          helper=">= 95 % angestrebt"
+          helper=""
         />
         <MetricCard
           icon={<Flame className="h-5 w-5 text-orange-300" />}
           label="Ausschuss"
           value={`${metrics.scrapRate.toFixed(2)} %`}
-          helper="Reduzieren"
+          helper=""
         />
         <MetricCard
           icon={<Activity className="h-5 w-5 text-primary-200" />}
           label="Aktive Alarme"
           value={metrics.activeAlarms}
-          helper="> 5 % markiert"
-        />
-        <MetricCard
-          icon={<ShieldCheck className="h-5 w-5 text-sky-300" />}
-          label="Abdeckung"
-          value={`${metrics.coverage.toFixed(1)} %`}
-          helper="FPY >= 95 %"
+          helper=""
         />
       </div>
 
@@ -425,7 +418,7 @@ export const ProductionDashboard = () => {
                     className="mt-2 inline-flex items-center gap-2 rounded-xl border border-primary-500/40 bg-primary-900/20 px-3 py-2 text-primary-100 hover:bg-primary-900/30"
                   >
                     <Info className="h-4 w-4" />
-                    Detailansicht oeffnen
+                    Detailansicht öffnen
                   </button>
                 </div>
               ) : (
@@ -442,7 +435,7 @@ export const ProductionDashboard = () => {
               className="flex items-center gap-2 rounded-xl border border-dark-border/60 bg-dark-bg/60 px-3 py-2 hover:border-primary-500 hover:text-primary-100"
             >
               <BarChart2 className="h-4 w-4" />
-              Traceability oeffnen
+              Traceability öffnen
             </button>
             <button
               onClick={() => goToPlants(filters.plantId ?? '')}

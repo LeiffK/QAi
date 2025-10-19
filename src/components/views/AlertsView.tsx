@@ -75,7 +75,7 @@ export const AlertsView = () => {
             Alarm-Center
           </h2>
           <p className="text-sm text-dark-muted mt-1">
-            Uebersicht aller Chargen mit Fehlerrate ueber 3 Prozent inklusive Ursache und
+            Übersicht aller Chargen mit Fehlerrate über 3 Prozent inklusive Ursache und
             Massnahme.
           </p>
         </div>
@@ -193,7 +193,7 @@ export const AlertsView = () => {
         {alerts.length === 0 && (
           <div className="text-center py-12 text-dark-muted">
             <CheckCircle className="mx-auto mb-3 h-12 w-12 text-emerald-300" />
-            Keine Alarme fuer die gewählten Filter.
+            Keine Alarme für die gewählten Filter.
           </div>
         )}
       </div>

@@ -84,7 +84,7 @@ export const LineComparison = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        ðŸ’¡ <strong>Tipp:</strong> Ziehen Sie im unteren Bereich, um zu zoomen. Alle Charts folgen.
+        <strong>Tipp:</strong> Ziehen Sie im unteren Bereich, um zu zoomen. Alle Charts folgen.
       </div>
     </div>
   );

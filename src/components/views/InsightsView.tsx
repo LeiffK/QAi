@@ -3,7 +3,6 @@ import { ShiftHeatmap } from '../charts/ShiftHeatmap';
 import { LineComparison } from '../charts/LineComparison';
 import { MaintenanceTimeline } from '../charts/MaintenanceTimeline';
 import { SupplierImpact } from '../charts/SupplierImpact';
-import { OutputVsDefectRate } from '../charts/OutputVsDefectRate';
 import { CorrelationMatrix } from '../charts/CorrelationMatrix';
 import { CauseMap } from '../charts/CauseMap';
 import { useStore, type InsightCategory } from '../../store/useStore';
@@ -52,8 +51,8 @@ export const InsightsView = () => {
       {shouldShow('quality') && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Qualitaet</span>
-            <h2 className="text-2xl font-bold text-primary-400">Qualitaet & Muster</h2>
+            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Qualität</span>
+            <h2 className="text-2xl font-bold text-primary-400">Qualität & Muster</h2>
           </div>
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -74,9 +73,8 @@ export const InsightsView = () => {
             <LineComparison />
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6">
             <MaintenanceTimeline />
-            <OutputVsDefectRate />
           </div>
         </div>
       )}
@@ -113,7 +111,7 @@ export const InsightsView = () => {
       <div className="card border-primary-700 bg-primary-900/10 p-4">
         <div className="text-sm text-dark-muted">
           <strong className="text-dark-text">Tipp:</strong> Klicken Sie auf Datenpunkte, Balken
-          oder Knoten fuer Details und Filterung. Nutzen Sie die Kategorien oben, um gezielt nach
+          oder Knoten für Details und Filterung. Nutzen Sie die Kategorien oben, um gezielt nach
           Insights zu suchen.
         </div>
       </div>

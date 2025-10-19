@@ -2,11 +2,30 @@
 import { PLANTS, LINES, PRODUCTS, SHIFTS, SUPPLIERS } from '../data/mockData';
 
 export const FilterBar = () => {
-  const { filters, setFilter, resetFilters } = useStore();
+  const { filters, setFilter, resetFilters, accessiblePlantIds } = useStore((state) => ({
+    filters: state.filters,
+    setFilter: state.setFilter,
+    resetFilters: state.resetFilters,
+    accessiblePlantIds: state.accessiblePlantIds,
+  }));
+
+  const plantOptions =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? PLANTS.filter((plant) => accessiblePlantIds.includes(plant.id))
+      : PLANTS;
+
+  const scopedLines =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? LINES.filter((line) => accessiblePlantIds.includes(line.plantId))
+      : LINES;
 
   const availableLines = filters.plantId
-    ? LINES.filter((line) => line.plantId === filters.plantId)
-    : LINES;
+    ? scopedLines.filter((line) => line.plantId === filters.plantId)
+    : scopedLines;
+
+  const plantSelectValue =
+    filters.plantId ?? (plantOptions.length === 1 ? plantOptions[0].id : '');
+  const showAllPlantsOption = !accessiblePlantIds || accessiblePlantIds.length > 1;
 
   return (
     <div className="rounded-2xl border border-dark-border/70 bg-dark-surface/80 px-5 py-4 shadow-[0_18px_42px_-30px_rgba(15,23,42,0.8)]">
@@ -25,11 +44,12 @@ export const FilterBar = () => {
           <span className="text-[11px] uppercase tracking-[0.25em] whitespace-nowrap">Werk</span>
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
-            value={filters.plantId || ''}
+            value={plantSelectValue}
             onChange={(event) => setFilter('plantId', event.target.value || null)}
+            disabled={plantOptions.length <= 1}
           >
-            <option value="">Alle Werke</option>
-            {PLANTS.map((plant) => (
+            {showAllPlantsOption && <option value="">Alle Werke</option>}
+            {plantOptions.map((plant) => (
               <option key={plant.id} value={plant.id}>
                 {plant.name}
               </option>

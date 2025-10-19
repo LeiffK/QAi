@@ -5,11 +5,21 @@ import { filterBatches, calculateQualityScore, getScoreBadgeColor } from '../../
 import { CheckCircle, AlertTriangle, Activity } from 'lucide-react';
 
 export const PlantsOverview = () => {
-  const { filters, brushSelection, setSelectedPlantId, setActiveTab } = useStore();
+  const { filters, brushSelection, setSelectedPlantId, setActiveTab, accessiblePlantIds } = useStore();
+
+  const plantScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? PLANTS.filter((plant) => accessiblePlantIds.includes(plant.id))
+      : PLANTS;
+
+  const lineScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? LINES.filter((line) => accessiblePlantIds.includes(line.plantId))
+      : LINES;
 
   const plantStats = useMemo(() => {
-    return PLANTS.map((plant) => {
-      const plantLines = LINES.filter((l) => l.plantId === plant.id);
+    return plantScope.map((plant) => {
+      const plantLines = lineScope.filter((l) => l.plantId === plant.id);
       const plantBatches = filterBatches(
         BATCHES.filter((b) => b.plantId === plant.id),
         filters,
@@ -35,7 +45,7 @@ export const PlantsOverview = () => {
       // Get current status of lines
       const activeLines = plantLines.length;
       const recentBatches = plantBatches.slice(0, 10);
-      const alertCount = recentBatches.filter((b) => b.defectRate > 5).length;
+      const alertCount = recentBatches.filter((b) => b.defectRate > 3).length;
 
       return {
         plant,
@@ -45,10 +55,10 @@ export const PlantsOverview = () => {
         totalOutput: Math.round(totalOutput),
         alertCount,
         qualityScore,
-        status: alertCount > 3 ? 'warning' : avgDefectRate < 3 ? 'good' : 'normal',
+        status: alertCount > 0 ? 'warning' : avgDefectRate < 3 ? 'good' : 'normal',
       };
     });
-  }, [filters, brushSelection]);
+  }, [filters, brushSelection, accessiblePlantIds]);
 
   const handlePlantClick = (plantId: string) => {
     setSelectedPlantId(plantId);
@@ -58,7 +68,7 @@ export const PlantsOverview = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-primary-400">Werke Ãœbersicht</h2>
+        <h2 className="text-2xl font-bold text-primary-400">Werke Übersicht</h2>
         <div className="text-sm text-dark-muted">
           Klicken Sie auf ein Werk für Details
         </div>
@@ -131,7 +141,7 @@ export const PlantsOverview = () => {
             {stat.alertCount > 0 && (
               <div className="mt-4 pt-4 border-t border-dark-border">
                 <div className="flex items-center gap-2 text-red-400">
-                  <span className="text-lg">âš </span>
+                  <span className="text-lg"> </span>
                   <span className="text-sm font-medium">{stat.alertCount} aktive Alarme</span>
                 </div>
               </div>

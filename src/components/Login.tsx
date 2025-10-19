@@ -33,12 +33,7 @@ export const Login = () => {
           </div>
           <div>
             <h1 className="text-2xl font-semibold text-primary-100 tracking-wide">QAI Login</h1>
-            <p className="mt-2 text-sm text-dark-muted leading-relaxed">
-              Bitte melden Sie sich mit Ihrem Namen an. Für die nächste Iteration stehen die
-              Benutzer <strong>Thomas</strong>, <strong>Sabine</strong> und <strong>Claudia</strong>
-              zur Verfügung. Das Passwort lautet jeweils <code className="text-primary-200">demo</code>.
-            </p>
-          </div>
+                     </div>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -50,7 +45,7 @@ export const Login = () => {
               <User className="h-4 w-4 text-dark-muted" />
               <input
                 className="flex-1 bg-transparent text-dark-text outline-none text-sm"
-                placeholder="Thomas"
+                placeholder=""
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
                 autoComplete="username"
@@ -67,7 +62,7 @@ export const Login = () => {
               <Lock className="h-4 w-4 text-dark-muted" />
               <input
                 className="flex-1 bg-transparent text-dark-text outline-none text-sm"
-                placeholder="demo"
+                placeholder=""
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}

@@ -19,7 +19,24 @@ import { PLANTS, LINES, BATCHES, PRODUCTS, SHIFTS } from '../../data/mockData';
 import { filterBatches, calculateKPIs, calculateQualityScore } from '../../utils/filterData';
 
 export const DashboardView = () => {
-  const { filters, brushSelection, setActiveTab, setSelectedPlantId, setFilter } = useStore();
+  const {
+    filters,
+    brushSelection,
+    setActiveTab,
+    setSelectedPlantId,
+    setFilter,
+    accessiblePlantIds,
+  } = useStore();
+
+  const visiblePlants =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? PLANTS.filter((plant) => accessiblePlantIds.includes(plant.id))
+      : PLANTS;
+
+  const visibleLines =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? LINES.filter((line) => accessiblePlantIds.includes(line.plantId))
+      : LINES;
 
   // Global KPIs
   const globalKPIs = useMemo(() => {
@@ -29,13 +46,13 @@ export const DashboardView = () => {
 
   // Plant Status
   const plantStatus = useMemo(() => {
-    return PLANTS.map((plant) => {
+    return visiblePlants.map((plant) => {
       const plantBatches = filterBatches(
         BATCHES.filter((b) => b.plantId === plant.id),
         filters,
         brushSelection
       );
-      const plantLines = LINES.filter((l) => l.plantId === plant.id);
+      const plantLines = visibleLines.filter((l) => l.plantId === plant.id);
 
       const avgDefectRate = plantBatches.length > 0
         ? plantBatches.reduce((sum, b) => sum + b.defectRate, 0) / plantBatches.length
@@ -61,7 +78,7 @@ export const DashboardView = () => {
         batchCount: plantBatches.length,
       };
     });
-  }, [filters, brushSelection]);
+  }, [filters, brushSelection, visibleLines, visiblePlants]);
 
   // Recent Alerts
   const recentAlerts = useMemo(() => {
@@ -157,7 +174,7 @@ export const DashboardView = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-dark-text">Dashboard</h1>
-          <p className="text-dark-muted mt-1">Echtzeit-Ãœbersicht aller Qualitätsmetriken</p>
+          <p className="text-dark-muted mt-1">Echtzeit-Übersicht aller Qualitätsmetriken</p>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <Activity className="w-4 h-4 text-green-400 animate-pulse" />
@@ -573,7 +590,7 @@ export const DashboardView = () => {
                 <Activity className="w-4 h-4" />
                 <span>Aktive Linien</span>
               </div>
-              <div className="text-sm font-medium text-dark-text">{LINES.length}</div>
+              <div className="text-sm font-medium text-dark-text">{visibleLines.length}</div>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm text-dark-muted">

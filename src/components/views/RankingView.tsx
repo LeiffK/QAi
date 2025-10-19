@@ -5,13 +5,23 @@ import { filterBatches, calculateQualityScore, getScoreBadgeColor } from '../../
 import { Factory, Settings, Package, Truck, Clock, Award, CheckCircle, AlertTriangle, Circle } from 'lucide-react';
 
 export const RankingView = () => {
-  const { filters, brushSelection, setFilter, setSelectedPlantId, setActiveTab } = useStore();
+  const { filters, brushSelection, setFilter, setSelectedPlantId, setActiveTab, accessiblePlantIds } = useStore();
+
+  const plantScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? PLANTS.filter((plant) => accessiblePlantIds.includes(plant.id))
+      : PLANTS;
+
+  const lineScope =
+    accessiblePlantIds && accessiblePlantIds.length > 0
+      ? LINES.filter((line) => accessiblePlantIds.includes(line.plantId))
+      : LINES;
 
   const rankings = useMemo(() => {
     const filtered = filterBatches(BATCHES, filters, brushSelection);
 
     // Plants Ranking
-    const plantRanking = PLANTS.map((plant) => {
+    const plantRanking = plantScope.map((plant) => {
       const plantBatches = filtered.filter((b) => b.plantId === plant.id);
       const avgDefectRate = plantBatches.length > 0
         ? plantBatches.reduce((sum, b) => sum + b.defectRate, 0) / plantBatches.length
@@ -35,7 +45,7 @@ export const RankingView = () => {
     }).sort((a, b) => a.defectRate - b.defectRate);
 
     // Lines Ranking
-    const lineRanking = LINES.map((line) => {
+    const lineRanking = lineScope.map((line) => {
       const lineBatches = filtered.filter((b) => b.lineId === line.id);
       const avgDefectRate = lineBatches.length > 0
         ? lineBatches.reduce((sum, b) => sum + b.defectRate, 0) / lineBatches.length
@@ -47,7 +57,7 @@ export const RankingView = () => {
         ? lineBatches.reduce((sum, b) => sum + b.scrapRate, 0) / lineBatches.length
         : 0;
       const score = calculateQualityScore(avgDefectRate, avgFpy, avgScrapRate);
-      const plant = PLANTS.find((p) => p.id === line.plantId);
+      const plant = plantScope.find((p) => p.id === line.plantId);
 
       return {
         id: line.id,
@@ -133,7 +143,7 @@ export const RankingView = () => {
     }).sort((a, b) => a.defectRate - b.defectRate);
 
     return { plantRanking, lineRanking, productRanking, supplierRanking, shiftRanking };
-  }, [filters, brushSelection]);
+  }, [filters, brushSelection, accessiblePlantIds]);
 
   const getMedalColor = (index: number) => {
     if (index === 0) return 'text-yellow-400';  // Gold

@@ -33,18 +33,18 @@ const DEFECT_LIBRARY: Record<
   }
 > = {
   Verformung: {
-    cause: 'Temperaturschwankung in der Kuehlstrecke fuehrt zu Formabweichungen.',
+    cause: 'Temperaturschwankung in der Kühlstrecke führt zu Formabweichungen.',
     measures: [
-      'Kuehlstrecke auf 18 Grad stabilisieren',
-      'Zusatzliche Stichproben der Charge durchfuehren',
+      'Kühlstrecke auf 18 Grad stabilisieren',
+      'Zusatzliche Stichproben der Charge durchführen',
       'Technik-Team per Alarm informieren',
     ],
     risk: 'Erhoehter Ausschuss und Kundenbeschwerden wegen Formabweichung.',
   },
-  'Nuss-Qualitaet': {
+  'Nuss-Qualität': {
     cause: 'Rohwarencharge weist hohe Bruchrate auf.',
     measures: [
-      'Wareneingangssperre fuer betroffene Lieferung setzen',
+      'Wareneingangssperre für betroffene Lieferung setzen',
       'Lieferant zur Nachlieferung gemaess Spezifikation auffordern',
       'Alternative Liefercharge pruefen',
     ],
@@ -54,7 +54,7 @@ const DEFECT_LIBRARY: Record<
     cause: 'Siegeltemperatur variiert, Packungen schliessen nicht sauber.',
     measures: [
       'Siegelparameter neu kalibrieren',
-      'Linie fuer 15 Minuten stoppen und Testversuche fahren',
+      'Linie für 15 Minuten stoppen und Testversuche fahren',
       'Bereits verpackte Einheiten nachpruefen',
     ],
     risk: 'Produktsicherheit und Haltbarkeit sind gefaehrdet.',
@@ -118,9 +118,12 @@ export const analyzeBatch = (batch: Batch): BatchAnalysis => {
 
   const summaryParts = [
     `Charge ${batch.id}`,
-    `${batch.defectRate.toFixed(2)}% Fehlerrate`,
+    `Fehlerrate ${batch.defectRate.toLocaleString('de-DE', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })} %`,
     primaryDefect?.type ? `Top-Defekt: ${primaryDefect.type}` : 'Kein dominanter Defekt',
-    `Zeit: ${timestamp}`,
+    `Zeitpunkt: ${timestamp}`,
   ];
 
   return {
@@ -128,7 +131,7 @@ export const analyzeBatch = (batch: Batch): BatchAnalysis => {
     cause: knowledge.cause,
     measures: knowledge.measures,
     risk: knowledge.risk,
-    summary: summaryParts.join(' Â· '),
+    summary: `Analyse: ${summaryParts.join(', ')}`,
   };
 };
 

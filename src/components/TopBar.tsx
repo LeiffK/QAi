@@ -11,6 +11,14 @@ export const TopBar = () => {
     logout: state.logout,
   }));
 
+  const timeRangeContainerClass = isDarkMode
+    ? 'border border-primary-600/60 bg-primary-900/40'
+    : 'border border-primary-300 bg-primary-50';
+  const timeRangeLabelClass = isDarkMode ? 'text-primary-100' : 'text-primary-700';
+  const timeRangeSelectClass = isDarkMode
+    ? 'border-none bg-primary-950/60 text-primary-100 focus:border-primary-400 focus:bg-primary-900/60 focus:ring-primary-500'
+    : 'border border-primary-200 bg-white text-primary-800 shadow-sm focus:border-primary-400 focus:bg-primary-100 focus:ring-primary-400';
+
   return (
     <div className="flex items-center justify-between rounded-2xl border border-dark-border/80 bg-dark-surface/95 px-6 py-4 shadow-[0_12px_32px_-16px_rgba(15,23,42,0.75)] backdrop-blur">
       <div className="flex items-center gap-4">
@@ -24,10 +32,16 @@ export const TopBar = () => {
       </div>
 
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 rounded-xl border border-dark-border/80 bg-dark-bg/60 px-3 py-2 shadow-inner">
-          <span className="text-xs font-medium uppercase tracking-wide text-dark-muted">Zeitraum</span>
+        <div
+          className={`flex items-center gap-2 rounded-xl px-3 py-2 shadow-inner transition-colors ${timeRangeContainerClass}`}
+        >
+          <span
+            className={`text-xs font-medium uppercase tracking-wide transition-colors ${timeRangeLabelClass}`}
+          >
+            Zeitraum
+          </span>
           <select
-            className="select h-9 min-w-[150px] border-none bg-transparent px-0 text-sm text-dark-text focus:ring-0"
+            className={`select h-9 min-w-[150px] rounded-lg px-3 text-sm transition-colors focus:outline-none focus:ring-2 ${timeRangeSelectClass}`}
             value={filters.timeRange}
             onChange={(e) => setFilter('timeRange', e.target.value as typeof filters.timeRange)}
           >

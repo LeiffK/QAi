@@ -126,10 +126,10 @@ export const CauseMap = () => {
           <div key={idx} className="bg-dark-bg rounded-lg p-3 border border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <div className="text-sm font-medium text-dark-text">
-                {nodes.find((n) => n.id === edge.source)?.label} â†’ {nodes.find((n) => n.id === edge.target)?.label}
+                {nodes.find((n) => n.id === edge.source)?.label} {nodes.find((n) => n.id === edge.target)?.label}
               </div>
               <div className="text-xs text-yellow-400">
-                {'â˜…'.repeat(edge.confidence)}
+                {''.repeat(edge.confidence)}
               </div>
             </div>
             <div className="text-sm text-dark-muted">{edge.explanation}</div>
@@ -138,7 +138,7 @@ export const CauseMap = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        ðŸ’¡ <strong>Tipp:</strong> Klicken Sie auf Knoten, um Filter zu setzen und Details zu sehen.
+        <strong>Tipp:</strong> Klicken Sie auf Knoten, um Filter zu setzen und Details zu sehen.
       </div>
     </div>
   );
