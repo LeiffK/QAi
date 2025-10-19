@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { useStore } from '../../store/useStore';
 import { PLANTS, LINES, BATCHES } from '../../data/mockData';
 import { filterBatches, calculateQualityScore, getScoreBadgeColor } from '../../utils/filterData';
@@ -58,7 +58,7 @@ export const PlantsOverview = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-primary-400">Werke Übersicht</h2>
+        <h2 className="text-2xl font-bold text-primary-400">Werke Ãœbersicht</h2>
         <div className="text-sm text-dark-muted">
           Klicken Sie auf ein Werk für Details
         </div>
@@ -119,11 +119,11 @@ export const PlantsOverview = () => {
                 >
                   {stat.avgDefectRate}%
                 </div>
-                <div className="text-xs text-dark-muted">Ø Fehlerrate</div>
+                <div className="text-xs text-dark-muted">Ã˜ Fehlerrate</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-green-400">{stat.avgFpy}%</div>
-                <div className="text-xs text-dark-muted">Ø FPY</div>
+                <div className="text-xs text-dark-muted">Ã˜ FPY</div>
               </div>
             </div>
 
@@ -131,7 +131,7 @@ export const PlantsOverview = () => {
             {stat.alertCount > 0 && (
               <div className="mt-4 pt-4 border-t border-dark-border">
                 <div className="flex items-center gap-2 text-red-400">
-                  <span className="text-lg">⚠</span>
+                  <span className="text-lg">âš </span>
                   <span className="text-sm font-medium">{stat.alertCount} aktive Alarme</span>
                 </div>
               </div>
@@ -139,7 +139,7 @@ export const PlantsOverview = () => {
 
             {/* Click hint */}
             <div className="mt-4 text-center text-xs text-primary-400 opacity-0 group-hover:opacity-100 transition-opacity">
-              → Klicken für Linien-Details
+              â†’ Klicken für Linien-Details
             </div>
           </div>
         ))}
@@ -147,3 +147,5 @@ export const PlantsOverview = () => {
     </div>
   );
 };
+
+

@@ -26,7 +26,7 @@ export const FilterBar = () => {
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
             value={filters.plantId || ''}
-            onChange={(e) => setFilter('plantId', e.target.value || null)}
+            onChange={(event) => setFilter('plantId', event.target.value || null)}
           >
             <option value="">Alle Werke</option>
             {PLANTS.map((plant) => (
@@ -42,7 +42,7 @@ export const FilterBar = () => {
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
             value={filters.lineId || ''}
-            onChange={(e) => setFilter('lineId', e.target.value || null)}
+            onChange={(event) => setFilter('lineId', event.target.value || null)}
             disabled={!filters.plantId && availableLines.length > 4}
           >
             <option value="">Alle Linien</option>
@@ -59,7 +59,7 @@ export const FilterBar = () => {
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
             value={filters.productId || ''}
-            onChange={(e) => setFilter('productId', e.target.value || null)}
+            onChange={(event) => setFilter('productId', event.target.value || null)}
           >
             <option value="">Alle Produkte</option>
             {PRODUCTS.map((product) => (
@@ -75,7 +75,7 @@ export const FilterBar = () => {
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
             value={filters.shift || ''}
-            onChange={(e) => setFilter('shift', e.target.value || null)}
+            onChange={(event) => setFilter('shift', event.target.value || null)}
           >
             <option value="">Alle Schichten</option>
             {SHIFTS.map((shift) => (
@@ -91,7 +91,7 @@ export const FilterBar = () => {
           <select
             className="select h-11 rounded-xl border-dark-border/70 bg-dark-bg/70 text-sm"
             value={filters.supplierId || ''}
-            onChange={(e) => setFilter('supplierId', e.target.value || null)}
+            onChange={(event) => setFilter('supplierId', event.target.value || null)}
           >
             <option value="">Alle Lieferanten</option>
             {SUPPLIERS.map((supplier) => (
@@ -105,5 +105,4 @@ export const FilterBar = () => {
     </div>
   );
 };
-
 

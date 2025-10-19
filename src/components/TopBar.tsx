@@ -1,8 +1,15 @@
-import { Moon, Sun } from 'lucide-react';
+﻿import { Moon, Sun } from 'lucide-react';
 import { useStore } from '../store/useStore';
 
 export const TopBar = () => {
-  const { isDarkMode, toggleTheme, filters, setFilter } = useStore();
+  const { isDarkMode, toggleTheme, filters, setFilter, user, logout } = useStore((state) => ({
+    isDarkMode: state.isDarkMode,
+    toggleTheme: state.toggleTheme,
+    filters: state.filters,
+    setFilter: state.setFilter,
+    user: state.user,
+    logout: state.logout,
+  }));
 
   return (
     <div className="flex items-center justify-between rounded-2xl border border-dark-border/80 bg-dark-surface/95 px-6 py-4 shadow-[0_12px_32px_-16px_rgba(15,23,42,0.75)] backdrop-blur">
@@ -42,6 +49,23 @@ export const TopBar = () => {
           <span className="pointer-events-none absolute right-3 text-xs uppercase tracking-wide text-dark-muted">Ctrl+K</span>
         </div>
 
+        {user && (
+          <div className="hidden items-center gap-3 rounded-xl border border-primary-500/40 bg-primary-900/20 px-4 py-2 text-xs text-primary-100 md:flex">
+            <div className="flex flex-col leading-tight">
+              <span className="font-semibold tracking-[0.25em] uppercase">{user.displayName}</span>
+              <span className="text-[10px] uppercase tracking-[0.3em] text-primary-200/80">
+                {user.roleLabel}
+              </span>
+            </div>
+            <button
+              onClick={logout}
+              className="rounded-lg border border-primary-600/60 px-3 py-1 text-[11px] uppercase tracking-[0.25em] transition-all hover:bg-primary-600 hover:text-white"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+
         <button
           onClick={toggleTheme}
           className="btn btn-secondary flex h-11 w-11 items-center justify-center rounded-xl border-dark-border/70 bg-dark-bg/70 text-primary-200 transition-all hover:border-primary-500 hover:bg-primary-900/30 hover:text-primary-100"
@@ -53,3 +77,4 @@ export const TopBar = () => {
     </div>
   );
 };
+

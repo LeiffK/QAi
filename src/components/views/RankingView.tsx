@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { useStore } from '../../store/useStore';
 import { PLANTS, LINES, PRODUCTS, SUPPLIERS, BATCHES, SHIFTS } from '../../data/mockData';
 import { filterBatches, calculateQualityScore, getScoreBadgeColor } from '../../utils/filterData';
@@ -354,3 +354,4 @@ export const RankingView = () => {
     </div>
   );
 };
+

@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+﻿/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -9,17 +9,17 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af',
-          900: '#1e3a8a',
-          950: '#172554',
+          50: '#f0f7fb',
+          100: '#d8ecf5',
+          200: '#b9dff0',
+          300: '#8ccce4',
+          400: '#64bad9',
+          500: '#489cd0',
+          600: '#3a81af',
+          700: '#306892',
+          800: '#244f71',
+          900: '#17374f',
+          950: '#0c2031',
         },
         dark: {
           bg: '#0a0e1a',
@@ -36,3 +36,4 @@ export default {
   },
   plugins: [],
 }
+

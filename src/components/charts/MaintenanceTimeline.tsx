@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { ResponsiveContainer, ComposedChart, Line, XAxis, YAxis, Tooltip, Legend, ReferenceLine } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { TIME_SERIES, MAINTENANCE_EVENTS, LINES } from '../../data/mockData';
@@ -58,7 +58,7 @@ export const MaintenanceTimeline = () => {
         time: event.timestamp.toLocaleString('de-DE', { month: 'short', day: 'numeric' }),
         timestamp: event.timestamp,
         label: event.type === 'Geplant' ? 'Plan' : 'Akut',
-        stroke: event.type === 'Geplant' ? '#10b981' : '#2563eb',
+        stroke: event.type === 'Geplant' ? '#10b981' : '#3a81af',
         line: line?.name ?? event.lineId,
         type: event.type,
       };
@@ -89,7 +89,7 @@ export const MaintenanceTimeline = () => {
             />
             <Legend />
 
-            <Line type="monotone" dataKey="defectRate" name="Fehlerrate" stroke="#3b82f6" strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="defectRate" name="Fehlerrate" stroke="#489cd0" strokeWidth={2} dot={false} />
 
             {maintenanceMarkers.map((marker, idx) => (
               <ReferenceLine
@@ -110,3 +110,4 @@ export const MaintenanceTimeline = () => {
     </div>
   );
 };
+

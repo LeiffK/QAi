@@ -1,4 +1,4 @@
-import { useStore } from '../../store/useStore';
+﻿import { useStore } from '../../store/useStore';
 import { CAUSE_MAP } from '../../data/mockData';
 
 export const CauseMap = () => {
@@ -44,7 +44,7 @@ export const CauseMap = () => {
             if (!source || !target) return null;
 
             const strokeWidth = edge.strength * 3;
-            const strokeColor = edge.confidence === 3 ? '#3b82f6' : edge.confidence === 2 ? '#60a5fa' : '#93c5fd';
+            const strokeColor = edge.confidence === 3 ? '#489cd0' : edge.confidence === 2 ? '#64bad9' : '#8ccce4';
 
             return (
               <g key={idx}>
@@ -72,7 +72,7 @@ export const CauseMap = () => {
               refY="3"
               orient="auto"
             >
-              <polygon points="0 0, 10 3, 0 6" fill="#3b82f6" />
+              <polygon points="0 0, 10 3, 0 6" fill="#489cd0" />
             </marker>
           </defs>
 
@@ -82,7 +82,7 @@ export const CauseMap = () => {
             if (!pos) return null;
 
             const isCause = node.type === 'cause';
-            const fillColor = isCause ? '#2563eb' : '#ef4444';
+            const fillColor = isCause ? '#3a81af' : '#ef4444';
 
             return (
               <g
@@ -126,10 +126,10 @@ export const CauseMap = () => {
           <div key={idx} className="bg-dark-bg rounded-lg p-3 border border-dark-border">
             <div className="flex items-center justify-between mb-1">
               <div className="text-sm font-medium text-dark-text">
-                {nodes.find((n) => n.id === edge.source)?.label} → {nodes.find((n) => n.id === edge.target)?.label}
+                {nodes.find((n) => n.id === edge.source)?.label} â†’ {nodes.find((n) => n.id === edge.target)?.label}
               </div>
               <div className="text-xs text-yellow-400">
-                {'★'.repeat(edge.confidence)}
+                {'â˜…'.repeat(edge.confidence)}
               </div>
             </div>
             <div className="text-sm text-dark-muted">{edge.explanation}</div>
@@ -138,8 +138,9 @@ export const CauseMap = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Tipp:</strong> Klicken Sie auf Knoten, um Filter zu setzen und Details zu sehen.
+        ðŸ’¡ <strong>Tipp:</strong> Klicken Sie auf Knoten, um Filter zu setzen und Details zu sehen.
       </div>
     </div>
   );
 };
+

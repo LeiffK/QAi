@@ -1,4 +1,4 @@
-import { useStore } from '../../store/useStore';
+﻿import { useStore } from '../../store/useStore';
 import { PlantsOverview } from './PlantsOverview';
 import { LinesDetail } from './LinesDetail';
 
@@ -11,3 +11,4 @@ export const PlantsView = () => {
     </div>
   );
 };
+

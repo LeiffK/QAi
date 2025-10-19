@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, Legend, Brush } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { TIME_SERIES, LINES } from '../../data/mockData';
@@ -36,11 +36,11 @@ export const LineComparison = () => {
     }
   };
 
-  const colors = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b'];
+  const colors = ['#489cd0', '#10b981', '#8b5cf6', '#f59e0b'];
 
   return (
     <div className="card p-5" id="line-comparison">
-      <h3 className="text-lg font-semibold mb-4">Linienvergleich – Fehlerrate im Zeitverlauf</h3>
+      <h3 className="text-lg font-semibold mb-4">Linienvergleich â€“ Fehlerrate im Zeitverlauf</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">
@@ -78,20 +78,15 @@ export const LineComparison = () => {
                 connectNulls
               />
             ))}
-            <Brush
-              dataKey="time"
-              height={30}
-              stroke="#3b82f6"
-              fill="#131827"
-              onChange={handleBrushChange}
-            />
+            <Brush dataKey="time" height={30} stroke="#489cd0" fill="#131827" onChange={handleBrushChange} />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Tipp:</strong> Ziehen Sie im unteren Bereich, um zu zoomen. Alle Charts folgen.
+        ðŸ’¡ <strong>Tipp:</strong> Ziehen Sie im unteren Bereich, um zu zoomen. Alle Charts folgen.
       </div>
     </div>
   );
 };
+

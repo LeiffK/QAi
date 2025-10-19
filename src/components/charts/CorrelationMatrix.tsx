@@ -1,4 +1,4 @@
-import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Cell } from 'recharts';
+﻿import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Cell } from 'recharts';
 import { CORRELATION_MATRIX } from '../../data/mockData';
 
 const FACTORS = ['Saison', 'Schicht', 'Linie', 'Wartung', 'Lieferant', 'Ausbringung'];
@@ -13,11 +13,11 @@ export const CorrelationMatrix = () => {
   }));
 
   const getColor = (value: number) => {
-    if (value > 0.7) return '#2563eb';
-    if (value > 0.4) return '#3b82f6';
-    if (value > 0.2) return '#60a5fa';
-    if (value > 0.1) return '#93c5fd';
-    return '#1e3a8a';
+    if (value > 0.7) return '#3a81af';
+    if (value > 0.4) return '#489cd0';
+    if (value > 0.2) return '#64bad9';
+    if (value > 0.1) return '#8ccce4';
+    return '#17374f';
   };
 
   return (
@@ -59,7 +59,7 @@ export const CorrelationMatrix = () => {
                   return (
                     <div className="rounded-lg border border-dark-border bg-dark-surface px-3 py-2 shadow-lg">
                       <div className="text-sm font-medium text-dark-text">
-                        {current.factor1} – {current.factor2}
+                        {current.factor1} â€“ {current.factor2}
                       </div>
                       <div className="text-sm text-primary-400">
                         Korrelation: {current.value.toFixed(2)}
@@ -80,8 +80,9 @@ export const CorrelationMatrix = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        📌 <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
+        ðŸ“Œ <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
       </div>
     </div>
   );
 };
+

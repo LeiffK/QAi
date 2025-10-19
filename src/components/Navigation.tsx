@@ -1,4 +1,4 @@
-import { useStore } from '../store/useStore';
+﻿import { useStore } from '../store/useStore';
 import {
   AlertTriangle,
   BarChart3,
@@ -18,15 +18,29 @@ const tabs = [
 ] as const;
 
 export const Navigation = () => {
-  const { activeTab, setActiveTab } = useStore();
+  const { activeTab, setActiveTab, allowedTabs, user } = useStore((state) => ({
+    activeTab: state.activeTab,
+    setActiveTab: state.setActiveTab,
+    allowedTabs: state.allowedTabs,
+    user: state.user,
+  }));
+
+  const visibleTabs = tabs.filter((tab) => allowedTabs.includes(tab.id));
 
   return (
-    <nav className="sticky top-[6.5rem] flex max-h-[calc(100vh-7.5rem)] flex-col overflow-hidden rounded-2xl border border-dark-border/80 bg-dark-surface/80 shadow-[0_18px_42px_-30px_rgba(15,23,42,0.8)]">
+    <nav className="sticky top-[7.5rem] flex max-h-[calc(100vh-8.5rem)] flex-col overflow-hidden rounded-2xl border border-dark-border/80 bg-dark-surface/80 shadow-[0_18px_42px_-30px_rgba(15,23,42,0.8)]">
       <div className="px-6 pb-4 pt-6">
-        <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Navigation</span>
+        <div className="flex flex-col gap-1">
+          <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Navigation</span>
+          {user && (
+            <span className="text-[11px] uppercase tracking-[0.28em] text-primary-200">
+              {user.displayName} Â· {user.roleLabel}
+            </span>
+          )}
+        </div>
       </div>
       <div className="flex-1 space-y-1 overflow-y-auto px-3 pb-6">
-        {tabs.map(({ id, label, icon: Icon }) => {
+        {visibleTabs.map(({ id, label, icon: Icon }) => {
           const isActive = activeTab === id;
           return (
             <button
@@ -54,3 +68,4 @@ export const Navigation = () => {
     </nav>
   );
 };
+

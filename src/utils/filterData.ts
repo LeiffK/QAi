@@ -1,4 +1,4 @@
-import { Filters, BrushSelection } from '../store/useStore';
+﻿import { Filters, BrushSelection } from '../store/useStore';
 import { Batch, TimeSeriesPoint } from '../data/mockData';
 
 export const getDateRange = (timeRange: string, customStart: Date | null, customEnd: Date | null): { start: Date; end: Date } => {
@@ -193,3 +193,4 @@ export const calculateKPIs = (batches: Batch[]) => {
     coverageDelta: Number(coverageDelta.toFixed(1)),
   };
 };
+

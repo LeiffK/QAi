@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+﻿import { useMemo, useState } from 'react';
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { PLANTS, LINES, BATCHES, TIME_SERIES, PRODUCTS, SUPPLIERS, SHIFTS } from '../../data/mockData';
@@ -413,3 +413,7 @@ export const LinesDetail = () => {
     </div>
   );
 };
+
+
+
+

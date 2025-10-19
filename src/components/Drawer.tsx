@@ -1,14 +1,56 @@
+﻿import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { X } from 'lucide-react';
+import { X, ClipboardCheck, Save } from 'lucide-react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { useStore } from '../store/useStore';
+import type { BatchViewModel } from '../utils/analysis';
+
+const statusOptions = [
+  { value: 'offen', label: 'Offen' },
+  { value: 'in_pruefung', label: 'In Pruefung' },
+  { value: 'geklaert', label: 'Geklaert' },
+  { value: 'zurueckgestellt', label: 'Zurueckgestellt' },
+];
 
 export const Drawer = () => {
-  const { drawerOpen, drawerContent, drawerData, closeDrawer } = useStore();
+  const { drawerOpen, drawerContent, drawerData, closeDrawer, setChargeAnnotation } = useStore(
+    (state) => ({
+      drawerOpen: state.drawerOpen,
+      drawerContent: state.drawerContent,
+      drawerData: state.drawerData,
+      closeDrawer: state.closeDrawer,
+      setChargeAnnotation: state.setChargeAnnotation,
+    })
+  );
+
+  const [note, setNote] = useState('');
+  const [status, setStatus] = useState<'offen' | 'in_pruefung' | 'geklaert' | 'zurueckgestellt'>(
+    'offen'
+  );
+  const [savedMessage, setSavedMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (drawerContent === 'batch' && drawerData?.annotation) {
+      setNote(drawerData.annotation.comment);
+      setStatus(drawerData.annotation.status);
+    } else {
+      setNote('');
+      setStatus('offen');
+    }
+    setSavedMessage(null);
+  }, [drawerContent, drawerData]);
 
   if (!drawerOpen || !drawerData) {
     return null;
   }
+
+  const batch = drawerData as BatchViewModel;
+
+  const handleSaveAnnotation = () => {
+    setChargeAnnotation(batch.id, { comment: note, status });
+    setSavedMessage('Kommentar gespeichert.');
+    setTimeout(() => setSavedMessage(null), 2500);
+  };
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-dark-border/70 bg-dark-surface/90 shadow-[0_24px_60px_-35px_rgba(15,23,42,0.85)]">
@@ -16,13 +58,13 @@ export const Drawer = () => {
         <div>
           <p className="text-[11px] uppercase tracking-[0.3em] text-dark-muted">Detailansicht</p>
           <h2 className="text-xl font-semibold text-primary-200">
-            {drawerContent === 'batch' ? `Charge ${drawerData.id}` : 'Details'}
+            {drawerContent === 'batch' ? `Charge ${batch.id}` : 'Details'}
           </h2>
         </div>
         <button
           onClick={closeDrawer}
           className="btn btn-secondary flex h-10 w-10 items-center justify-center rounded-xl border-dark-border/60 bg-dark-bg/60 text-dark-muted transition-all hover:border-primary-500 hover:bg-primary-900/20 hover:text-primary-100"
-          aria-label="Detailbereich schließen"
+          aria-label="Detailbereich schliessen"
         >
           <X className="h-5 w-5" />
         </button>
@@ -32,44 +74,81 @@ export const Drawer = () => {
         {drawerContent === 'batch' && (
           <>
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">Überblick</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
+                Ueberblick
+              </h3>
               <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-                <InfoItem label="Werk" value={drawerData.plantName} />
-                <InfoItem label="Linie" value={drawerData.lineName} />
-                <InfoItem label="Produkt" value={drawerData.productName} />
-                <InfoItem label="Lieferant" value={drawerData.supplierName} />
-                <InfoItem label="Lot" value={drawerData.lotNumber} />
+                <InfoItem label="Werk" value={batch.plantName} />
+                <InfoItem label="Linie" value={batch.lineName} />
+                <InfoItem label="Produkt" value={batch.productName} />
+                <InfoItem label="Lieferant" value={batch.supplierName} />
+                <InfoItem label="Lot" value={batch.lotNumber} />
                 <InfoItem
                   label="Schicht"
                   value={
                     <span className="badge badge-info text-xs font-medium uppercase tracking-wide">
-                      {drawerData.shift}
+                      {batch.shift}
                     </span>
                   }
                 />
                 <InfoItem
                   label="Zeitpunkt"
-                  value={new Date(drawerData.timestamp).toLocaleString('de-DE')}
+                  value={batch.timestamp.toLocaleString('de-DE', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
                 />
-                <InfoItem label="Ausbringung" value={`${drawerData.output} Stk/h`} />
+                <InfoItem label="Ausbringung" value={`${batch.output} Stk/h`} />
               </div>
             </section>
 
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">Qualitätskennzahlen</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
+                Qualitaetskennzahlen
+              </h3>
               <div className="mt-4 grid grid-cols-3 gap-4">
-                <MetricBlock label="Fehlerrate" value={`${drawerData.defectRate.toFixed(2)}%`} tone="error" />
-                <MetricBlock label="FPY" value={`${drawerData.fpy.toFixed(1)}%`} tone="success" />
-                <MetricBlock label="Ausschuss" value={`${drawerData.scrapRate.toFixed(2)}%`} tone="warning" />
+                <MetricBlock label="Fehlerrate" value={`${batch.defectRate.toFixed(2)}%`} tone="error" />
+                <MetricBlock label="FPY" value={`${batch.fpy.toFixed(1)}%`} tone="success" />
+                <MetricBlock label="Ausschuss" value={`${batch.scrapRate.toFixed(2)}%`} tone="warning" />
               </div>
             </section>
 
-            {drawerData.defects && drawerData.defects.length > 0 && (
+            <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5 space-y-4">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200 flex items-center gap-2">
+                <ClipboardCheck className="h-4 w-4 text-primary-200" />
+                Gefuehrte Fehleranalyse
+              </h3>
+              <div className="rounded-xl border border-dark-border/60 bg-dark-surface/60 px-4 py-3 text-sm text-dark-muted leading-relaxed">
+                {batch.analysis.summary}
+              </div>
+              <div className="rounded-xl border border-dark-border/60 bg-dark-surface/60 px-4 py-3 text-sm">
+                <strong className="text-primary-100">Ursache:</strong> {batch.analysis.cause}
+              </div>
+              <div className="space-y-2">
+                <strong className="text-xs uppercase tracking-[0.3em] text-dark-muted">
+                  Empfohlene Massnahmen
+                </strong>
+                <ul className="space-y-2 text-sm text-dark-muted list-disc pl-5">
+                  {batch.analysis.measures.map((measure, index) => (
+                    <li key={index}>{measure}</li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            {batch.defects && batch.defects.length > 0 && (
               <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
-                <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">Defekte nach Art</h3>
+                <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
+                  Defekte nach Art
+                </h3>
                 <div className="mt-4 h-64">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={drawerData.defects} margin={{ top: 5, right: 20, left: 20, bottom: 60 }}>
+                    <BarChart
+                      data={batch.defects}
+                      margin={{ top: 5, right: 20, left: 20, bottom: 60 }}
+                    >
                       <XAxis
                         dataKey="type"
                         stroke="#9ca3af"
@@ -85,27 +164,67 @@ export const Drawer = () => {
                           borderRadius: '12px',
                         }}
                       />
-                      <Bar dataKey="count" fill="#3b82f6" radius={[6, 6, 0, 0]} />
+                      <Bar dataKey="count" fill="#489cd0" radius={[6, 6, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </section>
             )}
 
+            <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5 space-y-4">
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
+                Kommentar & QS-Status
+              </h3>
+              <div className="flex flex-col gap-3">
+                <label className="flex flex-col gap-2 text-xs text-dark-muted">
+                  <span className="uppercase tracking-[0.3em] text-dark-muted/80">Status</span>
+                  <select
+                    className="rounded-xl border border-dark-border/60 bg-dark-surface/60 px-3 py-2 text-sm text-dark-text"
+                    value={status}
+                    onChange={(event) =>
+                      setStatus(event.target.value as typeof status)
+                    }
+                  >
+                    {statusOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="flex flex-col gap-2 text-xs text-dark-muted">
+                  <span className="uppercase tracking-[0.3em] text-dark-muted/80">Kommentar</span>
+                  <textarea
+                    className="min-h-[120px] rounded-xl border border-dark-border/60 bg-dark-surface/60 px-3 py-2 text-sm text-dark-text focus:border-primary-500 focus:ring-2 focus:ring-primary-500/40"
+                    value={note}
+                    onChange={(event) => setNote(event.target.value)}
+                    placeholder="Massnahme, Ansprechpartner, Pruefergebnis..."
+                  />
+                </label>
+                <div className="flex items-center justify-between">
+                  <button
+                    onClick={handleSaveAnnotation}
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-white transition-colors hover:bg-primary-500"
+                  >
+                    <Save className="h-4 w-4" />
+                    Speichern
+                  </button>
+                  {savedMessage && (
+                    <span className="text-xs text-primary-200">{savedMessage}</span>
+                  )}
+                </div>
+              </div>
+            </section>
+
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">Belege & Analysen</h3>
+              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
+                Belege & Analysen
+              </h3>
               <div className="mt-4 grid grid-cols-2 gap-3">
-                {drawerData.documents?.map((doc: { label: string; icon?: string }) => (
-                  <DocumentBlock key={doc.label} label={doc.label} icon={doc.icon} />
-                ))}
-                {!drawerData.documents && (
-                  <>
-                    <DocumentBlock label="Prüfprotokoll" icon="DOC" />
-                    <DocumentBlock label="Laboranalyse" icon="LAB" />
-                    <DocumentBlock label="Bilder (3)" icon="IMG" />
-                    <DocumentBlock label="Ultraschall" icon="NDT" />
-                  </>
-                )}
+                <DocumentBlock label="Pruefprotokoll" icon="DOC" />
+                <DocumentBlock label="Laboranalyse" icon="LAB" />
+                <DocumentBlock label="Bilder (3)" icon="IMG" />
+                <DocumentBlock label="Ultraschall" icon="NDT" />
               </div>
             </section>
           </>
@@ -157,3 +276,4 @@ const DocumentBlock = ({ label, icon }: DocumentBlockProps) => (
     <div className="text-xs uppercase tracking-[0.2em]">{label}</div>
   </div>
 );
+

@@ -1,4 +1,4 @@
-// Types
+﻿// Types
 export interface Plant {
   id: string;
   name: string;
@@ -494,3 +494,5 @@ export const SHIFT_DATA = generateShiftData();
 export const SUPPLIER_IMPACT_DATA = generateSupplierImpactData();
 export const CORRELATION_MATRIX = generateCorrelationMatrix();
 export const CAUSE_MAP = generateCauseMap();
+
+

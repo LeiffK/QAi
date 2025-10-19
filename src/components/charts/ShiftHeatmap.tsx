@@ -1,4 +1,4 @@
-import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Cell } from 'recharts';
+﻿import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, ZAxis, Tooltip, Cell } from 'recharts';
 import { SHIFT_DATA, SHIFTS, WEEKDAYS } from '../../data/mockData';
 
 export const ShiftHeatmap = () => {
@@ -14,15 +14,15 @@ export const ShiftHeatmap = () => {
 
   const getColor = (value: number) => {
     const intensity = value / maxValue;
-    if (intensity < 0.25) return '#1e3a8a';
-    if (intensity < 0.5) return '#1d4ed8';
-    if (intensity < 0.75) return '#2563eb';
-    return '#3b82f6';
+    if (intensity < 0.25) return '#17374f';
+    if (intensity < 0.5) return '#306892';
+    if (intensity < 0.75) return '#3a81af';
+    return '#489cd0';
   };
 
   return (
     <div className="card p-5" id="shift-pattern">
-      <h3 className="mb-4 text-lg font-semibold">Schichtmuster – Fehlerrate nach Wochentag</h3>
+      <h3 className="mb-4 text-lg font-semibold">Schichtmuster â€“ Fehlerrate nach Wochentag</h3>
 
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
@@ -76,3 +76,5 @@ export const ShiftHeatmap = () => {
     </div>
   );
 };
+
+

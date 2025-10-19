@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import {
   TrendingUp,
   TrendingDown,
@@ -157,7 +157,7 @@ export const DashboardView = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-dark-text">Dashboard</h1>
-          <p className="text-dark-muted mt-1">Echtzeit-Übersicht aller Qualitätsmetriken</p>
+          <p className="text-dark-muted mt-1">Echtzeit-Ãœbersicht aller Qualitätsmetriken</p>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <Activity className="w-4 h-4 text-green-400 animate-pulse" />
@@ -286,8 +286,8 @@ export const DashboardView = () => {
               <AreaChart data={trendData}>
                 <defs>
                   <linearGradient id="colorDefectRate" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#489cd0" stopOpacity={0.3}/>
+                    <stop offset="95%" stopColor="#489cd0" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
                 <XAxis
@@ -321,7 +321,7 @@ export const DashboardView = () => {
                 <Area
                   type="monotone"
                   dataKey="defectRate"
-                  stroke="#3b82f6"
+                  stroke="#489cd0"
                   strokeWidth={2}
                   fill="url(#colorDefectRate)"
                 />
@@ -373,12 +373,12 @@ export const DashboardView = () => {
                   {forecast.trend === 'increasing' ? (
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                      <span>Erhöhte Fehlerrate erwartet. Präventive Maßnahmen empfohlen.</span>
+                      <span>Erhöhte Fehlerrate erwartet. Präventive MaÃŸnahmen empfohlen.</span>
                     </div>
                   ) : forecast.trend === 'decreasing' ? (
                     <div className="flex items-start gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span>Qualität verbessert sich. Aktuelle Maßnahmen beibehalten.</span>
+                      <span>Qualität verbessert sich. Aktuelle MaÃŸnahmen beibehalten.</span>
                     </div>
                   ) : (
                     <div className="flex items-start gap-2">
@@ -479,7 +479,7 @@ export const DashboardView = () => {
                     <div className="flex-1">
                       <div className="text-sm font-medium text-dark-text flex items-center gap-2">
                         <span>{alert.id}</span>
-                        <span className="text-xs text-dark-muted">·</span>
+                        <span className="text-xs text-dark-muted">Â·</span>
                         <span className="text-xs text-dark-muted">{alert.plantName} / {alert.lineName}</span>
                       </div>
                       <div className="text-xs text-dark-muted mt-1">
@@ -526,7 +526,7 @@ export const DashboardView = () => {
                 }}
               >
                 <div className="text-2xl">
-                  {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `${idx + 1}.`}
+                  {idx === 0 ? 'ðŸ¥‡' : idx === 1 ? 'ðŸ¥ˆ' : idx === 2 ? 'ðŸ¥‰' : `${idx + 1}.`}
                 </div>
                 <div className="flex-1">
                   <div className="font-medium text-dark-text">{product.name}</div>
@@ -600,3 +600,5 @@ export const DashboardView = () => {
     </div>
   );
 };
+
+

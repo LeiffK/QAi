@@ -1,20 +1,22 @@
-# QAI – Quality Assurance Intelligence
+﻿![Important](image/Important.webp)
 
-Eine umfassende, intelligente App für Werks- und QS-Leitung in der Süßwarenproduktion mit erweiterten Analytics und Drill-Down-Funktionen.
+# QAI Ã¢â‚¬â€œ Quality Assurance Intelligence
 
-## ✨ Neue Features (Erweitert)
+Eine umfassende, intelligente App fÃƒÂ¼r Werks- und QS-Leitung in der SÃƒÂ¼ÃƒÅ¸warenproduktion mit erweiterten Analytics und Drill-Down-Funktionen.
 
-### 🏭 Tab: Werke
-- **Werke-Übersicht**: Status-Cards mit Quality-Score
+## Ã¢Å“Â¨ Neue Features (Erweitert)
+
+### Ã°Å¸ÂÂ­ Tab: Werke
+- **Werke-ÃƒÅ“bersicht**: Status-Cards mit Quality-Score
   - Linienanzahl, Durchschnittliche Fehlerrate, FPY, Ausbringung
   - **Quality-Score (0-100)** mit Farbcodierung
   - Farbcodierter Status (Gut, Normal, Alarm)
-  - Alarm-Zähler
-  - **Klickbar** → Linien-Detail-View
+  - Alarm-ZÃƒÂ¤hler
+  - **Klickbar** Ã¢â€ â€™ Linien-Detail-View
 
-- **Linien-Detail-View**: Live-Status + Chargen-Übersicht
-  - Aktueller Status (Läuft, Alarm, Achtung, Idle) mit Animation
-  - **Quality-Score** für jede Linie
+- **Linien-Detail-View**: Live-Status + Chargen-ÃƒÅ“bersicht
+  - Aktueller Status (LÃƒÂ¤uft, Alarm, Achtung, Idle) mit Animation
+  - **Quality-Score** fÃƒÂ¼r jede Linie
   - Key Metrics (Fehlerrate, FPY, Ausbringung)
   - Mini-Trend-Chart (letzte 20 Datenpunkte)
   - Letzte Charge mit Zeitstempel
@@ -22,79 +24,79 @@ Eine umfassende, intelligente App für Werks- und QS-Leitung in der Süßwarenpr
     - Filterbar nach Produkt und Schicht
     - Sortierbar nach Zeit, Fehlerrate, FPY
     - Alle Chargen der Linie mit Details
-    - **Klickbar** → Charge-Details im Drawer
+    - **Klickbar** Ã¢â€ â€™ Charge-Details im Drawer
 
-### 📊 Tab: Insights
-- **Kategorie-Filter**: Alle, Qualität, Produktion, Lieferanten, Korrelationen
-- **Qualität & Muster**:
-  - Saisonalität-Heatmap (Monate × Defektart)
-  - Schicht-Heatmap (Früh/Spät/Nacht × Wochentag)
+### Ã°Å¸â€œÅ  Tab: Insights
+- **Kategorie-Filter**: Alle, QualitÃƒÂ¤t, Produktion, Lieferanten, Korrelationen
+- **QualitÃƒÂ¤t & Muster**:
+  - SaisonalitÃƒÂ¤t-Heatmap (Monate Ãƒâ€” Defektart)
+  - Schicht-Heatmap (FrÃƒÂ¼h/SpÃƒÂ¤t/Nacht Ãƒâ€” Wochentag)
 - **Produktion & Wartung**:
   - Linien-Vergleich mit Brushing/Zoom
   - Wartungs-Timeline
-  - Ausbringung ↔ Fehlerrate Scatter
+  - Ausbringung Ã¢â€ â€ Fehlerrate Scatter
 - **Lieferanten-Analyse**:
   - Lieferanten-Impact (klickbare Balken setzen Filter)
 - **Korrelationen & KI-Insights**:
   - Korrelations-Matrix
   - Cause-Map (KI-Netzwerk mit klickbaren Knoten)
 
-### ⚠ Tab: Alarme (NEU)
-- **Alert-Center**: Zentrale Übersicht aller kritischen Chargen
+### Ã¢Å¡  Tab: Alarme (NEU)
+- **Alert-Center**: Zentrale ÃƒÅ“bersicht aller kritischen Chargen
   - Priorisierung: Kritisch (>7%), Hoch (5-7%), Mittel (3-5%)
-  - Statistik-Dashboard mit Anzahl je Priorität
+  - Statistik-Dashboard mit Anzahl je PrioritÃƒÂ¤t
   - Filter nach Alarm-Level
-  - **Klickbar**: "→ Linie" springt direkt zur betroffenen Linie
-  - **Klickbar**: "Details" öffnet Charge im Drawer
+  - **Klickbar**: "Ã¢â€ â€™ Linie" springt direkt zur betroffenen Linie
+  - **Klickbar**: "Details" ÃƒÂ¶ffnet Charge im Drawer
 
-### 🏆 Tab: Ranking (NEU)
+### Ã°Å¸Ââ€  Tab: Ranking (NEU)
 - **Performance-Ranking**: Top 3 und Bottom 3
   - **Werke**: Beste und schlechteste nach Fehlerrate
   - **Linien**: Top/Bottom mit Werk-Zuordnung
-  - **Produkte**: Qualitäts-Ranking
-  - **Lieferanten**: Bottom 3 (Problemfälle)
-  - **Schichten**: Vergleich Früh/Spät/Nacht
-  - Medaillen-Visualisierung (🥇🥈🥉) und Warn-Icons (🔴🟠🟡)
-  - **Quality-Score** für alle Elemente
-  - **Klickbar** → setzt Filter und wechselt zu Detail-Ansicht
+  - **Produkte**: QualitÃƒÂ¤ts-Ranking
+  - **Lieferanten**: Bottom 3 (ProblemfÃƒÂ¤lle)
+  - **Schichten**: Vergleich FrÃƒÂ¼h/SpÃƒÂ¤t/Nacht
+  - Medaillen-Visualisierung (Ã°Å¸Â¥â€¡Ã°Å¸Â¥Ë†Ã°Å¸Â¥â€°) und Warn-Icons (Ã°Å¸â€Â´Ã°Å¸Å¸ Ã°Å¸Å¸Â¡)
+  - **Quality-Score** fÃƒÂ¼r alle Elemente
+  - **Klickbar** Ã¢â€ â€™ setzt Filter und wechselt zu Detail-Ansicht
 
-### 🔍 Tab: Traceability
-- Vollständige Tabelle: Werk → Linie → Charge
-- **Klickbar** → Charge-Details im Drawer
+### Ã°Å¸â€Â Tab: Traceability
+- VollstÃƒÂ¤ndige Tabelle: Werk Ã¢â€ â€™ Linie Ã¢â€ â€™ Charge
+- **Klickbar** Ã¢â€ â€™ Charge-Details im Drawer
 - Defekte nach Art, Belege & Analysen (Platzhalter)
 
-### ⚡ Erweiterte Interaktivität
+### Ã¢Å¡Â¡ Erweiterte InteraktivitÃƒÂ¤t
 
 **Quick Actions Toolbar** (NEU):
-- ⚠ Alarme: Direkt zum Alert-Center
-- 🔄 Schichten: Schicht-Vergleich in Insights
-- 📦 Lieferanten: Lieferanten-Hotspots anzeigen
-- 🏆 Top/Bottom: Performance-Ranking öffnen
-- 🔄 Zurücksetzen: Alle Filter zurücksetzen
+- Ã¢Å¡  Alarme: Direkt zum Alert-Center
+- Ã°Å¸â€â€ž Schichten: Schicht-Vergleich in Insights
+- Ã°Å¸â€œÂ¦ Lieferanten: Lieferanten-Hotspots anzeigen
+- Ã°Å¸Ââ€  Top/Bottom: Performance-Ranking ÃƒÂ¶ffnen
+- Ã°Å¸â€â€ž ZurÃƒÂ¼cksetzen: Alle Filter zurÃƒÂ¼cksetzen
 
 **Breadcrumbs Navigation** (NEU):
-- Zeigt aktuellen Navigationspfad (z.B. 🏭 Werke › Berlin › Linie 1)
-- **Klickbar** für Zurück-Navigation
+- Zeigt aktuellen Navigationspfad (z.B. Ã°Å¸ÂÂ­ Werke Ã¢â‚¬Âº Berlin Ã¢â‚¬Âº Linie 1)
+- **Klickbar** fÃƒÂ¼r ZurÃƒÂ¼ck-Navigation
 
 **Drill-Anywhere**:
-- Von Werke-Card → Linien-Details → Chargen-Tabelle → Charge-Detail-Drawer
-- Von Alert → direkt zur betroffenen Linie
-- Von Ranking → direkt zur Werk/Linie/Produkt-Ansicht
-- Von Lieferanten-Chart → filtert und zeigt Chargen
+- Von Werke-Card Ã¢â€ â€™ Linien-Details Ã¢â€ â€™ Chargen-Tabelle Ã¢â€ â€™ Charge-Detail-Drawer
+- Von Alert Ã¢â€ â€™ direkt zur betroffenen Linie
+- Von Ranking Ã¢â€ â€™ direkt zur Werk/Linie/Produkt-Ansicht
+- Von Lieferanten-Chart Ã¢â€ â€™ filtert und zeigt Chargen
 
-**Weitere Interaktivität**:
+**Weitere InteraktivitÃƒÂ¤t**:
 - Globale Filter wirken auf alle Tabs
 - Brushing in Zeitserien setzt globales Zeitfenster
 - Cross-Highlighting (Hover/Klick)
-- Theme-Toggle (Dark ↔ Light)
-- **Quality-Score** überall sichtbar (0-100 mit Farbcodierung)
+- Theme-Toggle (Dark Ã¢â€ â€ Light)
+- **Quality-Score** ÃƒÂ¼berall sichtbar (0-100 mit Farbcodierung)
 
 ## Technologie
 
 - React + TypeScript + Vite
 - Tailwind CSS (Dark Theme, Blau-Akzent, keine warmen Farben)
-- Recharts für Visualisierungen
-- Zustand für State Management
+- Recharts fÃƒÂ¼r Visualisierungen
+- Zustand fÃƒÂ¼r State Management
 
 ## Installation & Start
 
@@ -106,142 +108,146 @@ npm install
 npm run dev
 ```
 
-Die App läuft dann auf **http://localhost:5174/** (oder Port 5173, falls verfügbar).
+Die App lÃƒÂ¤uft dann auf **http://localhost:5174/** (oder Port 5173, falls verfÃƒÂ¼gbar).
 
 ## Demo-Leitfaden (Erweitert)
 
-### Szenario 1: Werke → Linien → Chargen (Hauptfeature)
+### Szenario 1: Werke Ã¢â€ â€™ Linien Ã¢â€ â€™ Chargen (Hauptfeature)
 
-1. **Tab "Werke"** öffnen (Standard)
-2. Werke-Übersicht zeigt 2 Werke mit **Quality-Score**
-   - Berlin: Score 85 (grün = sehr gut)
+1. **Tab "Werke"** ÃƒÂ¶ffnen (Standard)
+2. Werke-ÃƒÅ“bersicht zeigt 2 Werke mit **Quality-Score**
+   - Berlin: Score 85 (grÃƒÂ¼n = sehr gut)
    - Hamburg: Score mit Farbe je nach Performance
 3. **Klicken Sie auf "Werk Berlin"**:
-   - Breadcrumbs zeigt: 🏭 Werke › Berlin
+   - Breadcrumbs zeigt: Ã°Å¸ÂÂ­ Werke Ã¢â‚¬Âº Berlin
    - Detailansicht mit allen Linien
-   - Jede Linie: Status (● Läuft), Metriken, **Quality-Score**, Mini-Trend
-4. **Klicken Sie auf "→ Alle Chargen"** bei Linie 1:
-   - Chargen-Tabelle öffnet sich unter der Linie
+   - Jede Linie: Status (Ã¢â€”Â LÃƒÂ¤uft), Metriken, **Quality-Score**, Mini-Trend
+4. **Klicken Sie auf "Ã¢â€ â€™ Alle Chargen"** bei Linie 1:
+   - Chargen-Tabelle ÃƒÂ¶ffnet sich unter der Linie
    - Zeigt ALLE Chargen dieser Linie
-   - Filter: Produkt (Toffifee/Schaumküsse/Knoppers), Schicht (Früh/Spät/Nacht)
+   - Filter: Produkt (Toffifee/SchaumkÃƒÂ¼sse/Knoppers), Schicht (FrÃƒÂ¼h/SpÃƒÂ¤t/Nacht)
    - Sortierung: Nach Zeit, Fehlerrate, FPY
 5. **Klicken Sie auf eine Charge** in der Tabelle:
-   - Drawer öffnet sich mit vollständigen Details
-   - Qualitätskennzahlen, Defekte nach Art, Belege
+   - Drawer ÃƒÂ¶ffnet sich mit vollstÃƒÂ¤ndigen Details
+   - QualitÃƒÂ¤tskennzahlen, Defekte nach Art, Belege
 
 ### Szenario 2: Insights mit Kategorien
 
-1. **Tab "Insights"** öffnen
+1. **Tab "Insights"** ÃƒÂ¶ffnen
 2. **Standard: Alle Kategorien** aktiv
    - Alle Charts werden angezeigt
-3. **Klicken Sie auf "Qualität"**:
-   - Nur Saisonalität- und Schicht-Heatmaps werden angezeigt
+3. **Klicken Sie auf "QualitÃƒÂ¤t"**:
+   - Nur SaisonalitÃƒÂ¤t- und Schicht-Heatmaps werden angezeigt
    - Sommer-Spike bei "Verformung" (Jun-Aug) sichtbar
 4. **Klicken Sie auf "Lieferanten"**:
    - Nur Lieferanten-Impact Chart
-   - **Lieferant X** rot markiert (höchste Fehlerrate)
+   - **Lieferant X** rot markiert (hÃƒÂ¶chste Fehlerrate)
 5. **Klicken Sie auf Lieferant X-Balken**:
    - Filter "Lieferant X" wird gesetzt
    - Alle Tabs/Charts aktualisieren sich
 
 ### Szenario 3: Alarme & Performance-Ranking (NEU)
 
-1. **Quick Action: "⚠ Alarme"** klicken
+1. **Quick Action: "Ã¢Å¡  Alarme"** klicken
    - Wechselt zum Alert-Center Tab
    - Zeigt Dashboard mit Gesamt/Kritisch/Hoch/Mittel
    - Tabelle mit allen Alarm-Chargen sortiert nach Fehlerrate
-2. **Klicken Sie auf "→ Linie"** bei einem Alarm:
+2. **Klicken Sie auf "Ã¢â€ â€™ Linie"** bei einem Alarm:
    - Springt direkt zur Linien-Detail-View
    - Breadcrumbs zeigt Pfad
    - Chargen der Linie werden angezeigt
-3. **Tab "Ranking"** öffnen:
-   - Zeigt Top 3 / Bottom 3 für alle Bereiche
-   - **Werke**: 🥇Berlin (beste), Hamburg (schlechteste)
+3. **Tab "Ranking"** ÃƒÂ¶ffnen:
+   - Zeigt Top 3 / Bottom 3 fÃƒÂ¼r alle Bereiche
+   - **Werke**: Ã°Å¸Â¥â€¡Berlin (beste), Hamburg (schlechteste)
    - **Linien**: Top 3 mit Medaillen
-   - **Lieferanten**: Bottom 3 mit 🔴🟠🟡
+   - **Lieferanten**: Bottom 3 mit Ã°Å¸â€Â´Ã°Å¸Å¸ Ã°Å¸Å¸Â¡
 4. **Klicken Sie auf ein Element** im Ranking:
    - Setzt Filter und wechselt zu Detail-Ansicht
-   - Z.B. Klick auf Lieferant X → wechselt zu Insights/Lieferanten
+   - Z.B. Klick auf Lieferant X Ã¢â€ â€™ wechselt zu Insights/Lieferanten
 
 ### Szenario 4: Quick Actions & Breadcrumbs
 
 1. **Quick Actions Toolbar** nutzen:
-   - 🏆 Top/Bottom → öffnet Ranking
-   - 📦 Lieferanten → wechselt zu Insights/Lieferanten
-   - 🔄 Zurücksetzen → reset aller Filter
+   - Ã°Å¸Ââ€  Top/Bottom Ã¢â€ â€™ ÃƒÂ¶ffnet Ranking
+   - Ã°Å¸â€œÂ¦ Lieferanten Ã¢â€ â€™ wechselt zu Insights/Lieferanten
+   - Ã°Å¸â€â€ž ZurÃƒÂ¼cksetzen Ã¢â€ â€™ reset aller Filter
 2. **Breadcrumbs Navigation**:
-   - Zeigt immer aktuellen Pfad (z.B. 🏭 Werke › Berlin › Linie 1)
-   - Klick auf "Werke" → zurück zur Übersicht
-   - Klick auf "Berlin" → zurück zu Linien-View
+   - Zeigt immer aktuellen Pfad (z.B. Ã°Å¸ÂÂ­ Werke Ã¢â‚¬Âº Berlin Ã¢â‚¬Âº Linie 1)
+   - Klick auf "Werke" Ã¢â€ â€™ zurÃƒÂ¼ck zur ÃƒÅ“bersicht
+   - Klick auf "Berlin" Ã¢â€ â€™ zurÃƒÂ¼ck zu Linien-View
 
-### Interaktivität testen
+### InteraktivitÃƒÂ¤t testen
 
 1. **Tab-Navigation**: Wechseln Sie zwischen Werke, Insights, Traceability
-   - Alle Tabs sind unabhängig navigierbar
-2. **Drill-Down**: Werk → Linien → Charge
-   - Jede Ebene klickbar für mehr Details
-3. **Kategorie-Filter** (Insights): Qualität, Produktion, Lieferanten, Korrelationen
+   - Alle Tabs sind unabhÃƒÂ¤ngig navigierbar
+2. **Drill-Down**: Werk Ã¢â€ â€™ Linien Ã¢â€ â€™ Charge
+   - Jede Ebene klickbar fÃƒÂ¼r mehr Details
+3. **Kategorie-Filter** (Insights): QualitÃƒÂ¤t, Produktion, Lieferanten, Korrelationen
    - Charts werden dynamisch gefiltert
 4. **Brushing** (Insights): Ziehen Sie im Linienvergleich-Chart
-   - Alle Charts zoomen auf den gewählten Zeitraum
-5. **Globale Filter**: Ändern Sie Werk, Linie, Produkt, Schicht
+   - Alle Charts zoomen auf den gewÃƒÂ¤hlten Zeitraum
+5. **Globale Filter**: Ãƒâ€žndern Sie Werk, Linie, Produkt, Schicht
    - Alle Tabs/Charts aktualisieren sich sofort
-6. **Theme-Toggle**: Klicken Sie auf ☀️/🌙 oben rechts
-   - Dark ↔ Light Mode
+6. **Theme-Toggle**: Klicken Sie auf Ã¢Ëœâ‚¬Ã¯Â¸Â/Ã°Å¸Å’â„¢ oben rechts
+   - Dark Ã¢â€ â€ Light Mode
 
 ## Datenmuster (synthetisch, aber realistisch)
 
-- **Sommer-Spikes**: Verformung steigt Jun-Aug (Hitze → Karamell-Verformung)
-- **Lieferant X**: Höhere Fehlerrate bei Nuss-Qualität
+- **Sommer-Spikes**: Verformung steigt Jun-Aug (Hitze Ã¢â€ â€™ Karamell-Verformung)
+- **Lieferant X**: HÃƒÂ¶here Fehlerrate bei Nuss-QualitÃƒÂ¤t
 - **Wartung**: Fehlerrate steigt vor Wartung, sinkt danach
-- **Nachtschicht**: Leicht erhöhte Fehlerrate
-- **Ausbringung**: Positive Korrelation mit Fehlerrate (höhere Geschwindigkeit → mehr Fehler)
+- **Nachtschicht**: Leicht erhÃƒÂ¶hte Fehlerrate
+- **Ausbringung**: Positive Korrelation mit Fehlerrate (hÃƒÂ¶here Geschwindigkeit Ã¢â€ â€™ mehr Fehler)
 
 ## Botschaft
 
-**QAI – Quality Assurance Intelligence** verbindet Daten, zeigt Zusammenhänge und erklärt **warum**.
+**QAI Ã¢â‚¬â€œ Quality Assurance Intelligence** verbindet Daten, zeigt ZusammenhÃƒÂ¤nge und erklÃƒÂ¤rt **warum**.
 
 ## Projekt-Struktur
 
 ```
 src/
-├── components/
-│   ├── charts/              # Alle Chart-Komponenten
-│   ├── views/               # Tab-Views
-│   │   ├── PlantsView.tsx   # Werke-Tab
-│   │   ├── PlantsOverview.tsx
-│   │   ├── LinesDetail.tsx
-│   │   └── InsightsView.tsx # Insights-Tab mit Kategorien
-│   ├── Navigation.tsx       # Tab-Navigation
-│   ├── TopBar.tsx
-│   ├── FilterBar.tsx
-│   ├── KPICards.tsx
-│   ├── TraceabilityTable.tsx
-│   └── Drawer.tsx
-├── data/
-│   └── mockData.ts          # Alle synthetischen Daten
-├── store/
-│   └── useStore.ts          # Zustand State Management (mit Tab/Selection State)
-├── utils/
-│   └── filterData.ts        # Filter & KPI-Berechnungen
-├── App.tsx                  # Haupt-App mit Tab-Routing
-├── main.tsx
-└── index.css
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ components/
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ charts/              # Alle Chart-Komponenten
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ views/               # Tab-Views
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ PlantsView.tsx   # Werke-Tab
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ PlantsOverview.tsx
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ LinesDetail.tsx
+Ã¢â€â€š   Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ InsightsView.tsx # Insights-Tab mit Kategorien
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ Navigation.tsx       # Tab-Navigation
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ TopBar.tsx
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ FilterBar.tsx
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ KPICards.tsx
+Ã¢â€â€š   Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ TraceabilityTable.tsx
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ Drawer.tsx
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ data/
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ mockData.ts          # Alle synthetischen Daten
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ store/
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ useStore.ts          # Zustand State Management (mit Tab/Selection State)
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ utils/
+Ã¢â€â€š   Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ filterData.ts        # Filter & KPI-Berechnungen
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ App.tsx                  # Haupt-App mit Tab-Routing
+Ã¢â€Å“Ã¢â€â‚¬Ã¢â€â‚¬ main.tsx
+Ã¢â€â€Ã¢â€â‚¬Ã¢â€â‚¬ index.css
 ```
 
-## Stabilität
+## StabilitÃƒÂ¤t
 
 - Keine NaN-Werte in Charts
 - Keine negativen Prozent-Achsen
 - Empty-States bei fehlenden Daten
-- Stabile Chart-Rendering (keine Re-Renders ohne Datenänderung)
+- Stabile Chart-Rendering (keine Re-Renders ohne DatenÃƒÂ¤nderung)
 - Clean Tooltips mit korrekten Werten
 
 ## Design
 
 - **Dark Theme** als Default (Light optional)
-- **Blau-Akzent** (#3b82f6, #2563eb)
+- **Blau-Akzent** (#489cd0)
 - **KEINE warmen Farben** (Orange, Braun)
 - **Futura-Font** (Fallback: Inter)
 - Dezente Micro-Animationen
-- Klare Hover/Focus-Zustände
+- Klare Hover/Focus-ZustÃƒÂ¤nde
+
+
+
+

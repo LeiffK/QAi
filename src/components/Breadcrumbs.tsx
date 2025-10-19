@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+﻿import { useEffect } from 'react';
 import { useStore, type BreadcrumbItem } from '../store/useStore';
 import { PLANTS } from '../data/mockData';
 import { LayoutDashboard, Factory, BarChart3, Search, AlertTriangle, Trophy } from 'lucide-react';
@@ -33,7 +33,7 @@ export const Breadcrumbs = () => {
       });
 
       if (selectedPlantId) {
-        const plant = PLANTS.find((plant) => plant.id === selectedPlantId);
+        const plant = PLANTS.find((item) => item.id === selectedPlantId);
         if (plant) {
           crumbs.push({
             label: plant.name,
@@ -95,10 +95,11 @@ export const Breadcrumbs = () => {
                 <span className="tracking-wide">{crumb.label}</span>
               </button>
             )}
-            {!isLast && <span className="text-dark-muted/70">›</span>}
+            {!isLast && <span className="text-dark-muted/70">{'>'}</span>}
           </div>
         );
       })}
     </nav>
   );
 };
+

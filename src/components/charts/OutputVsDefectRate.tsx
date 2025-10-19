@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { ResponsiveContainer, ScatterChart, Scatter, XAxis, YAxis, Tooltip, ZAxis } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { BATCHES } from '../../data/mockData';
@@ -18,7 +18,7 @@ export const OutputVsDefectRate = () => {
 
   return (
     <div className="card p-5" id="output-correlation">
-      <h3 className="text-lg font-semibold mb-4">Ausbringung ↔ Fehlerrate</h3>
+      <h3 className="text-lg font-semibold mb-4">Ausbringung â†” Fehlerrate</h3>
 
       <div className="h-96">
         <ResponsiveContainer width="100%" height="100%">
@@ -61,18 +61,16 @@ export const OutputVsDefectRate = () => {
                 return null;
               }}
             />
-            <Scatter
-              data={chartData}
-              fill="#3b82f6"
-              fillOpacity={0.6}
-            />
+            <Scatter data={chartData} fill="#489cd0" fillOpacity={0.6} />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        💡 <strong>Erkenntnis:</strong> Leicht positive Korrelation – höhere Ausbringung = leicht mehr Fehler.
+        ðŸ’¡ <strong>Erkenntnis:</strong> Leicht positive Korrelation â€“ höhere Ausbringung = leicht mehr Fehler.
       </div>
     </div>
   );
 };
+
+

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { SeasonalityHeatmap } from '../charts/SeasonalityHeatmap';
+﻿import { SeasonalityHeatmap } from '../charts/SeasonalityHeatmap';
 import { ShiftHeatmap } from '../charts/ShiftHeatmap';
 import { LineComparison } from '../charts/LineComparison';
 import { MaintenanceTimeline } from '../charts/MaintenanceTimeline';
@@ -7,70 +6,67 @@ import { SupplierImpact } from '../charts/SupplierImpact';
 import { OutputVsDefectRate } from '../charts/OutputVsDefectRate';
 import { CorrelationMatrix } from '../charts/CorrelationMatrix';
 import { CauseMap } from '../charts/CauseMap';
-
-type InsightCategory = 'all' | 'quality' | 'production' | 'suppliers' | 'correlations';
+import { useStore, type InsightCategory } from '../../store/useStore';
 
 export const InsightsView = () => {
-  const [activeCategory, setActiveCategory] = useState<InsightCategory>('all');
+  const { activeInsightsCategory, setActiveInsightsCategory } = useStore((state) => ({
+    activeInsightsCategory: state.activeInsightsCategory,
+    setActiveInsightsCategory: state.setActiveInsightsCategory,
+  }));
 
   const categories = [
-    { id: 'all' as InsightCategory, label: 'Alle', icon: '📊' },
-    { id: 'quality' as InsightCategory, label: 'Qualität', icon: '✓' },
-    { id: 'production' as InsightCategory, label: 'Produktion', icon: '⚙️' },
-    { id: 'suppliers' as InsightCategory, label: 'Lieferanten', icon: '📦' },
-    { id: 'correlations' as InsightCategory, label: 'Korrelationen', icon: '🔗' },
+    { id: 'all' as InsightCategory, label: 'Alle', icon: 'â—Ž' },
+    { id: 'quality' as InsightCategory, label: 'Qualitaet', icon: 'Q' },
+    { id: 'production' as InsightCategory, label: 'Produktion', icon: 'P' },
+    { id: 'suppliers' as InsightCategory, label: 'Lieferanten', icon: 'L' },
+    { id: 'correlations' as InsightCategory, label: 'Korrelationen', icon: 'K' },
   ];
 
-  const shouldShow = (category: InsightCategory) => {
-    return activeCategory === 'all' || activeCategory === category;
-  };
+  const shouldShow = (category: InsightCategory) =>
+    activeInsightsCategory === 'all' || activeInsightsCategory === category;
 
   return (
     <div className="space-y-6">
-      {/* Category Filter */}
       <div className="card p-4">
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm font-medium text-dark-muted mr-2">Kategorie:</span>
-          {categories.map((cat) => (
+          {categories.map((category) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`
-                flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all
-                ${
-                  activeCategory === cat.id
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-dark-border text-dark-text hover:bg-dark-border/70'
-                }
-              `}
+              key={category.id}
+              onClick={() => setActiveInsightsCategory(category.id)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                activeInsightsCategory === category.id
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-dark-border text-dark-text hover:bg-dark-border/70'
+              }`}
             >
-              <span>{cat.icon}</span>
-              <span>{cat.label}</span>
+              <span className="text-xs font-semibold tracking-[0.3em] text-primary-200">
+                {category.icon}
+              </span>
+              <span>{category.label}</span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Quality Section */}
       {shouldShow('quality') && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">✓</span>
-            <h2 className="text-2xl font-bold text-primary-400">Qualität & Muster</h2>
+            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Qualitaet</span>
+            <h2 className="text-2xl font-bold text-primary-400">Qualitaet & Muster</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <SeasonalityHeatmap />
             <ShiftHeatmap />
           </div>
         </div>
       )}
 
-      {/* Production Section */}
       {shouldShow('production') && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">⚙️</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Produktion</span>
             <h2 className="text-2xl font-bold text-primary-400">Produktion & Wartung</h2>
           </div>
 
@@ -78,18 +74,17 @@ export const InsightsView = () => {
             <LineComparison />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <MaintenanceTimeline />
             <OutputVsDefectRate />
           </div>
         </div>
       )}
 
-      {/* Suppliers Section */}
       {shouldShow('suppliers') && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">📦</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Lieferanten</span>
             <h2 className="text-2xl font-bold text-primary-400">Lieferanten-Analyse</h2>
           </div>
 
@@ -99,15 +94,14 @@ export const InsightsView = () => {
         </div>
       )}
 
-      {/* Correlations Section */}
       {shouldShow('correlations') && (
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <span className="text-2xl">🔗</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Korrelation</span>
             <h2 className="text-2xl font-bold text-primary-400">Korrelationen & KI-Insights</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <CorrelationMatrix />
             <div className="lg:col-span-2">
               <CauseMap />
@@ -116,16 +110,14 @@ export const InsightsView = () => {
         </div>
       )}
 
-      {/* Help text */}
-      <div className="card p-4 bg-primary-900/10 border-primary-700">
-        <div className="flex items-start gap-3">
-          <span className="text-xl">💡</span>
-          <div className="text-sm text-dark-muted">
-            <strong className="text-dark-text">Tipp:</strong> Klicken Sie auf Datenpunkte, Balken oder Knoten für Details und Filterung.
-            Nutzen Sie die Kategorien oben, um gezielt nach Insights zu suchen.
-          </div>
+      <div className="card border-primary-700 bg-primary-900/10 p-4">
+        <div className="text-sm text-dark-muted">
+          <strong className="text-dark-text">Tipp:</strong> Klicken Sie auf Datenpunkte, Balken
+          oder Knoten fuer Details und Filterung. Nutzen Sie die Kategorien oben, um gezielt nach
+          Insights zu suchen.
         </div>
       </div>
     </div>
   );
 };
+

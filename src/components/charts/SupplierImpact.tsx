@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+﻿import { useMemo } from 'react';
 import { ResponsiveContainer, ComposedChart, Bar, XAxis, YAxis, Tooltip, Legend, Cell } from 'recharts';
 import { useStore } from '../../store/useStore';
 import { SUPPLIER_IMPACT_DATA } from '../../data/mockData';
@@ -60,7 +60,7 @@ export const SupplierImpact = () => {
             <Bar
               dataKey="median"
               name="Median Fehlerrate"
-              fill="#3b82f6"
+              fill="#489cd0"
               onClick={handleBarClick}
               onMouseEnter={(data) => setHighlightedSupplier(data.supplierId)}
               onMouseLeave={() => setHighlightedSupplier(null)}
@@ -71,10 +71,10 @@ export const SupplierImpact = () => {
                   key={entry.supplierId}
                   fill={
                     highlightedSupplier === entry.supplierId
-                      ? '#60a5fa'
+                      ? '#64bad9'
                       : entry.supplierId === 'S4'
-                      ? '#1d4ed8'
-                      : '#3b82f6'
+                      ? '#306892'
+                      : '#489cd0'
                   }
                 />
               ))}
@@ -84,8 +84,10 @@ export const SupplierImpact = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        Hinweis: <strong>Lieferant X</strong> weist eine deutlich höhere Fehlerrate auf – Auswahl setzt den Lieferantenfilter.
+        Hinweis: <strong>Lieferant X</strong> weist eine deutlich höhere Fehlerrate auf â€“ Auswahl setzt den Lieferantenfilter.
       </div>
     </div>
   );
 };
+
+
