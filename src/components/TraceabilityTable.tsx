@@ -72,13 +72,13 @@ export const TraceabilityTable = () => {
         {tableData.length === 0 && (
           <div className="text-center py-12 text-dark-muted">
             <div className="text-4xl mb-2">-</div>
-            <div>Keine Daten fuer die gewaehlten Filter gefunden.</div>
+            <div>Keine Daten für die gewählten Filter gefunden.</div>
           </div>
         )}
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        Zeige {tableData.length} von {BATCHES.length} Chargen. Klicken fuer Details.
+        Zeige {tableData.length} von {BATCHES.length} Chargen. Klicken für Details.
       </div>
     </div>
   );

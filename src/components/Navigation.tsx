@@ -34,7 +34,7 @@ export const Navigation = () => {
           <span className="text-xs uppercase tracking-[0.3em] text-dark-muted">Navigation</span>
           {user && (
             <span className="text-[11px] uppercase tracking-[0.28em] text-primary-200">
-              {user.displayName} Â· {user.roleLabel}
+              {user.displayName} - {user.roleLabel}
             </span>
           )}
         </div>

@@ -80,7 +80,7 @@ export const CorrelationMatrix = () => {
       </div>
 
       <div className="mt-4 text-sm text-dark-muted">
-        ðŸ“Œ <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
+        <strong>Erkenntnis:</strong> Wartung korreliert stark mit Linie (0.45), Ausbringung mit Schicht (0.25).
       </div>
     </div>
   );

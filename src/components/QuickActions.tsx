@@ -64,7 +64,7 @@ export const QuickActions = () => {
     },
     {
       id: 'reset-all',
-      label: 'Zuruecksetzen',
+      label: 'Zurücksetzen',
       icon: RotateCcw,
       description: 'Alle Filter auf Rollen-Defaults setzen',
       handler: () => {

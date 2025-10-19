@@ -206,7 +206,7 @@ export const QualityDashboard = () => {
       <header className="flex flex-col gap-2">
         <h2 className="text-2xl font-semibold text-primary-100 flex items-center gap-3">
           <PackageCheck className="h-6 w-6 text-primary-200" />
-          QS-Konsole â€“ von Ursache bis Lieferantenwirkung
+          QS-Konsole von Ursache bis Lieferantenwirkung
         </h2>
         <p className="text-sm text-dark-muted">
           Jeder Klick setzt Produkt- oder Lieferantenfilter global und öffnet automatisch die

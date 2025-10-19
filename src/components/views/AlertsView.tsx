@@ -193,7 +193,7 @@ export const AlertsView = () => {
         {alerts.length === 0 && (
           <div className="text-center py-12 text-dark-muted">
             <CheckCircle className="mx-auto mb-3 h-12 w-12 text-emerald-300" />
-            Keine Alarme fuer die gewaehlten Filter.
+            Keine Alarme fuer die gewählten Filter.
           </div>
         )}
       </div>

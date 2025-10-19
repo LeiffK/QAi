@@ -7,9 +7,9 @@ import type { BatchViewModel } from '../utils/analysis';
 
 const statusOptions = [
   { value: 'offen', label: 'Offen' },
-  { value: 'in_pruefung', label: 'In Pruefung' },
-  { value: 'geklaert', label: 'Geklaert' },
-  { value: 'zurueckgestellt', label: 'Zurueckgestellt' },
+  { value: 'in_pruefung', label: 'In Prüfung' },
+  { value: 'geklaert', label: 'Geklärt' },
+  { value: 'zurueckgestellt', label: 'Zurückgestellt' },
 ];
 
 export const Drawer = () => {
@@ -106,7 +106,7 @@ export const Drawer = () => {
 
             <section className="rounded-2xl border border-dark-border/70 bg-dark-bg/70 p-5">
               <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-primary-200">
-                Qualitaetskennzahlen
+                Qualitätskennzahlen
               </h3>
               <div className="mt-4 grid grid-cols-3 gap-4">
                 <MetricBlock label="Fehlerrate" value={`${batch.defectRate.toFixed(2)}%`} tone="error" />
@@ -128,7 +128,7 @@ export const Drawer = () => {
               </div>
               <div className="space-y-2">
                 <strong className="text-xs uppercase tracking-[0.3em] text-dark-muted">
-                  Empfohlene Massnahmen
+                  Empfohlene Maßnahmen
                 </strong>
                 <ul className="space-y-2 text-sm text-dark-muted list-disc pl-5">
                   {batch.analysis.measures.map((measure, index) => (

@@ -245,7 +245,7 @@ export const ProductionDashboard = () => {
             {filteredAlarms.length === 0 ? (
               <div className="rounded-xl border border-green-700 bg-green-900/20 px-4 py-6 text-sm text-emerald-200 flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5" />
-                Keine Alarme innerhalb der gewaehlten Filter.
+                Keine Alarme innerhalb der gewählten Filter.
               </div>
             ) : (
               filteredAlarms.slice(0, 8).map((alarm) => (
@@ -295,14 +295,14 @@ export const ProductionDashboard = () => {
               className="flex items-center gap-2 rounded-xl border border-primary-600/40 bg-primary-900/20 px-3 py-2 text-primary-100 hover:bg-primary-900/30"
             >
               <ClipboardList className="h-4 w-4" />
-              Komplettes Alarm-Center oeffnen
+              Komplettes Alarm-Center öffnen
             </button>
             <button
               onClick={resetFilters}
               className="flex items-center gap-2 rounded-xl border border-dark-border/60 bg-dark-bg/60 px-3 py-2 hover:border-primary-500 hover:text-primary-100"
             >
               <RefreshCw className="h-4 w-4" />
-              Filter zuruecksetzen
+              Filter zurücksetzen
             </button>
           </div>
         </div>
@@ -358,12 +358,12 @@ export const ProductionDashboard = () => {
 
           <section>
             <h4 className="text-xs uppercase tracking-[0.35em] text-dark-muted mb-2">
-              Offene Massnahmen
+              Offene Maßnahmen
             </h4>
             <div className="space-y-2">
               {handover.openMeasures.length === 0 && (
                 <div className="rounded-xl border border-dark-border/60 bg-dark-bg/60 px-3 py-3 text-xs text-dark-muted">
-                  Keine offenen Massnahmen - weiter produzieren.
+                  Keine offenen Maßnahmen - weiter produzieren.
                 </div>
               )}
               {handover.openMeasures.map((item) => (
@@ -407,7 +407,7 @@ export const ProductionDashboard = () => {
 
             <div>
               <h4 className="text-xs uppercase tracking-[0.35em] text-dark-muted mb-2">
-                Juengste Charge
+                Jüngste Charge
               </h4>
               {handover.recentBatch ? (
                 <div className="rounded-xl border border-dark-border/60 bg-dark-bg/60 px-3 py-3 text-xs text-dark-muted space-y-2">
@@ -430,7 +430,7 @@ export const ProductionDashboard = () => {
                 </div>
               ) : (
                 <div className="rounded-xl border border-dark-border/60 bg-dark-bg/60 px-3 py-3 text-xs text-dark-muted">
-                  Keine Charge ausgewaehlt.
+                  Keine Charge ausgewählt.
                 </div>
               )}
             </div>
